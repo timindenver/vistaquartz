@@ -1,0 +1,18 @@
+.checkbox {
+  position: relative;
+
+  div {
+    border: 1.5px solid;
+    border-color: var(--chakra-colors-blue-dark);
+    border-radius: 4px;
+
+    &[data-state='checked'],
+    &[data-state='indeterminate'] {
+      background: var(--chakra-colors-blue-dark);
+    }
+  }
+
+  span {
+    padding-top: 1px;
+  }
+}

@@ -1,0 +1,36 @@
+@font-face {
+  font-family: 'Epilogue';
+  src:
+    local('Epilogue'),
+    url('./shared/fonts/Epilogue/Epilogue-VariableFont_wght.ttf')
+      format('opentype');
+  /* font-weight: normal; */
+}
+
+/* :where(svg) {
+  width: unset;
+  height: unset;
+} */
+
+:root {
+  color-scheme: only light;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Epilogue';
+}
+
+body {
+  height: 100vh;
+  overflow-y: auto;
+}
+
+#root {
+  height: 100vh;
+  min-height: fit-content;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}

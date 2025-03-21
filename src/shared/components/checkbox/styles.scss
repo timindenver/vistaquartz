@@ -1,0 +1,29 @@
+.customCheckbox {
+  gap: var(--chakra-spacing-sm);
+
+  div {
+    border-width: 2px;
+    border-color: var(--chakra-colors-blue-dark);
+
+    &[data-state='checked'] {
+      background: var(--chakra-colors-blue-dark);
+    }
+  }
+
+  span {
+    margin-top: 3px;
+    color: var(--chakra-colors-blue-dark);
+  }
+}
+
+.customCheckboxSquare {
+  div {
+    border-radius: 4px;
+  }
+}
+
+.customCheckboxRound {
+  div {
+    border-radius: 50%;
+  }
+}
