@@ -1,32 +1,26 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
-import {
-  Dialog,
-  Flex,
-  Grid,
-  Image,
-  Portal,
-  Text,
-  useBreakpointValue,
-} from '@chakra-ui/react'
+import { Dialog, Flex, Grid, Image, Portal, Text } from '@chakra-ui/react'
 import { type Control, Controller, type FormState } from 'react-hook-form'
 import ImageUploading, { ImageListType } from 'react-images-uploading'
 import ArrowLeftIcon from 'shared/assets/icons/arrowLeft'
 import BinIcon from 'shared/assets/icons/bin'
 import Bin1Icon from 'shared/assets/icons/bin1'
 import CloseIcon from 'shared/assets/icons/close'
+import 'swiper/css'
+import { Swiper, type SwiperRef, SwiperSlide } from 'swiper/react'
 
 import type { FormFields } from '../'
 
 type Step3Props = {
   control: Control<FormFields, any>
-  formState: FormState<FormFields>
   isMobile: boolean | undefined
 }
 
-export const Step3 = ({ control, formState, isMobile }: Step3Props) => {
+export const Step3 = ({ control, isMobile }: Step3Props) => {
   const maxUploadedImages = 10
-  const dialogSize = useBreakpointValue({ base: 'full', xl: 'cover' })
+
+  const swiperRef = useRef<null | SwiperRef>(null)
 
   const [uploadedImages, setUploadedImages] = useState<ImageListType>([])
   const [dialog, setDialog] = useState<{
@@ -42,29 +36,6 @@ export const Step3 = ({ control, formState, isMobile }: Step3Props) => {
     addUpdateIndex: number[] | undefined
   ) => {
     setUploadedImages(imageList as never[])
-  }
-
-  const handleImageMove = ({ direction }: { direction: 'left' | 'right' }) => {
-    if (dialog.activeImageIndex === null) {
-      return
-    }
-
-    if (direction === 'left' && dialog.activeImageIndex > 0) {
-      setDialog((prev) => ({
-        ...prev,
-        activeImageIndex: (prev.activeImageIndex as number) - 1,
-      }))
-    }
-
-    if (
-      direction === 'right' &&
-      dialog.activeImageIndex < uploadedImages.length - 1
-    ) {
-      setDialog((prev) => ({
-        ...prev,
-        activeImageIndex: (prev.activeImageIndex as number) + 1,
-      }))
-    }
   }
 
   const handleImageDelete = () => {
@@ -366,7 +337,18 @@ export const Step3 = ({ control, formState, isMobile }: Step3Props) => {
                         pos='relative'
                         zIndex='2'
                         onClick={() => {
-                          handleImageMove({ direction: 'left' })
+                          if (swiperRef.current) {
+                            const activeIndex =
+                              swiperRef.current.swiper.activeIndex
+                            const slidesLength =
+                              swiperRef.current.swiper.slides.length
+
+                            const isFirstSlide = activeIndex === 0
+
+                            swiperRef.current.swiper.slideTo(
+                              isFirstSlide ? slidesLength - 1 : activeIndex - 1
+                            )
+                          }
                         }}
                       >
                         <ArrowLeftIcon
@@ -376,17 +358,35 @@ export const Step3 = ({ control, formState, isMobile }: Step3Props) => {
                         />
                       </Flex>
                     )}
-
-                    <Image
-                      src={uploadedImages[dialog.activeImageIndex].dataURL}
-                      pos='absolute'
-                      top='0'
-                      bottom='0'
-                      left='0'
-                      right='0'
-                      m='auto'
-                      maxH='100%'
-                    />
+                    <Swiper
+                      ref={swiperRef}
+                      style={{ width: '100%', height: '100%' }}
+                      spaceBetween={50}
+                      slidesPerView={1}
+                      onSlideChange={(event) => {
+                        setDialog((prev) => ({
+                          ...prev,
+                          activeImageIndex: event.realIndex,
+                        }))
+                      }}
+                    >
+                      {uploadedImages?.map((uploadedImage) => {
+                        return (
+                          <SwiperSlide>
+                            <Image
+                              src={uploadedImage.dataURL}
+                              pos='absolute'
+                              top='0'
+                              bottom='0'
+                              left='0'
+                              right='0'
+                              m='auto'
+                              maxH='100%'
+                            />
+                          </SwiperSlide>
+                        )
+                      })}
+                    </Swiper>
                     {!isMobile && (
                       <Flex
                         rotate='180deg'
@@ -394,7 +394,18 @@ export const Step3 = ({ control, formState, isMobile }: Step3Props) => {
                         pos='relative'
                         zIndex='2'
                         onClick={() => {
-                          handleImageMove({ direction: 'right' })
+                          if (swiperRef.current) {
+                            const activeIndex =
+                              swiperRef.current.swiper.activeIndex
+                            const slidesLength =
+                              swiperRef.current.swiper.slides.length
+
+                            const isLastSlide = activeIndex < slidesLength - 1
+
+                            swiperRef.current.swiper.slideTo(
+                              isLastSlide ? activeIndex + 1 : 0
+                            )
+                          }
                         }}
                       >
                         <ArrowLeftIcon

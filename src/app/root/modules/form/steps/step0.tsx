@@ -1,5 +1,5 @@
 import { Flex, Text } from '@chakra-ui/react'
-import { type Control, Controller, type FormState } from 'react-hook-form'
+import { type Control, Controller, type FieldErrors } from 'react-hook-form'
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { CustomizedInput } from 'shared/components/input'
@@ -9,10 +9,10 @@ import './styles.scss'
 
 type Step0Props = {
   control: Control<FormFields, any>
-  formState: FormState<FormFields>
+  errors: FieldErrors<FormFields>
 }
 
-export const Step0 = ({ control, formState }: Step0Props) => {
+export const Step0 = ({ control, errors }: Step0Props) => {
   return (
     <Flex w='100%' flexDir='column' gap='md'>
       <Text textStyle='subheader' color='blue.dark'>
@@ -32,17 +32,21 @@ export const Step0 = ({ control, formState }: Step0Props) => {
             render={({
               field: {
                 name: controllerName,
+                ref: controllerRef,
                 value: controllerValue,
                 onChange: controllerOnChange,
+                onBlur: controllerOnBlur,
               },
             }) => {
-              const haveError = formState?.errors?.[0]?.firstName
+              const haveError = errors?.[0]?.firstName
 
               return (
                 <CustomizedInput
                   name={controllerName}
+                  ref={controllerRef}
                   value={controllerValue}
                   onChange={controllerOnChange}
+                  onBlur={controllerOnBlur}
                   placeholder='First Name'
                   borderColor={haveError ? 'error' : 'transparent'}
                   outline={
@@ -54,9 +58,9 @@ export const Step0 = ({ control, formState }: Step0Props) => {
               )
             }}
           />
-          {formState?.errors?.[0]?.firstName && (
+          {errors?.[0]?.firstName && (
             <Text fontSize='13px' color='error'>
-              {formState?.errors?.[0]?.firstName?.message}
+              {errors?.[0]?.firstName?.message}
             </Text>
           )}
         </Flex>
@@ -71,17 +75,21 @@ export const Step0 = ({ control, formState }: Step0Props) => {
             render={({
               field: {
                 name: controllerName,
+                ref: controllerRef,
                 value: controllerValue,
                 onChange: controllerOnChange,
+                onBlur: controllerOnBlur,
               },
             }) => {
-              const haveError = formState?.errors?.[0]?.lastName
+              const haveError = errors?.[0]?.lastName
 
               return (
                 <CustomizedInput
                   name={controllerName}
+                  ref={controllerRef}
                   value={controllerValue}
                   onChange={controllerOnChange}
+                  onBlur={controllerOnBlur}
                   placeholder='Last Name'
                   borderColor={haveError ? 'error' : 'transparent'}
                   outline={
@@ -93,9 +101,9 @@ export const Step0 = ({ control, formState }: Step0Props) => {
               )
             }}
           />
-          {formState?.errors?.[0]?.lastName && (
+          {errors?.[0]?.lastName && (
             <Text fontSize='13px' color='error'>
-              {formState?.errors?.[0]?.lastName?.message}
+              {errors?.[0]?.lastName?.message}
             </Text>
           )}
         </Flex>
@@ -113,17 +121,21 @@ export const Step0 = ({ control, formState }: Step0Props) => {
             render={({
               field: {
                 name: controllerName,
+                ref: controllerRef,
                 value: controllerValue,
                 onChange: controllerOnChange,
+                onBlur: controllerOnBlur,
               },
             }) => {
-              const haveError = formState?.errors?.[0]?.phone
+              const haveError = errors?.[0]?.phone
 
               return (
                 <PhoneInput
                   name={controllerName}
+                  ref={controllerRef}
                   value={controllerValue}
                   onChange={controllerOnChange}
+                  onBlur={controllerOnBlur}
                   className={haveError ? 'PhoneInputError' : ''}
                   placeholder='Enter phone number'
                   international={false}
@@ -132,9 +144,9 @@ export const Step0 = ({ control, formState }: Step0Props) => {
               )
             }}
           />
-          {formState?.errors?.[0]?.phone && (
+          {errors?.[0]?.phone && (
             <Text fontSize='13px' color='error'>
-              {formState?.errors?.[0]?.phone?.message}
+              {errors?.[0]?.phone?.message}
             </Text>
           )}
         </Flex>

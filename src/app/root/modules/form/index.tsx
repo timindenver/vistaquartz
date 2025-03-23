@@ -27,8 +27,8 @@ export type FormFields = [
     zip: string
   },
   {
-    estimateReceiveMethod: 'text' | 'email'
-    confirmation: 'owner' | 'non-owner'
+    estimateReceiveMethod: 'text' | 'email' | ''
+    confirmation: 'owner' | 'non-owner' | ''
   },
   {
     images?: any
@@ -58,19 +58,44 @@ export const Form = ({ setActiveStep }: FormProps) => {
   const isMobile = useBreakpointValue({ base: true, xl: false })
   const [activeFormStep, setActiveFormStep] = useState(0)
 
-  const { control, handleSubmit, formState, trigger, getValues } =
-    useForm<FormFields>({
-      mode: 'all',
-      reValidateMode: 'onChange',
-    })
+  const {
+    control,
+    handleSubmit,
+    trigger,
+    formState: { isValid, errors },
+  } = useForm<FormFields>({
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+    defaultValues: [
+      {
+        firstName: '',
+        lastName: '',
+        phone: '',
+      },
+      {
+        city: '',
+        state: '',
+        street: '',
+        zip: '',
+      },
+      {
+        estimateReceiveMethod: '',
+        confirmation: '',
+      },
+      {
+        images: [],
+      },
+    ],
+  })
 
   const onSubmit: SubmitHandler<FormFields> = (data) => {
     console.log(data)
   }
 
   const handleGoNextStep = () => {
-    if (!formState.isValid) {
-      trigger()
+    trigger()
+
+    if (!isValid) {
       return
     }
 
@@ -124,7 +149,7 @@ export const Form = ({ setActiveStep }: FormProps) => {
               borderBottom='1px solid var(--chakra-colors-blue-dark)'
             >
               {FORM_STEPS.map((formStep, formStepIndex) => {
-                const isActive = activeFormStep === formStepIndex
+                const isActive = activeFormStep >= formStepIndex
 
                 return (
                   <Flex
@@ -193,20 +218,16 @@ export const Form = ({ setActiveStep }: FormProps) => {
         >
           <Flex w='100%' h='100%' alignItems='center'>
             {activeFormStep === 0 && (
-              <Step0 control={control} formState={formState} />
+              <Step0 control={control} errors={errors} />
             )}
             {activeFormStep === 1 && (
-              <Step1 control={control} formState={formState} />
+              <Step1 control={control} errors={errors} />
             )}
             {activeFormStep === 2 && (
-              <Step2 control={control} formState={formState} />
+              <Step2 control={control} errors={errors} />
             )}
             {activeFormStep === 3 && (
-              <Step3
-                control={control}
-                formState={formState}
-                isMobile={isMobile}
-              />
+              <Step3 control={control} isMobile={isMobile} />
             )}
             {activeFormStep === 4 && (
               <Step4 setActiveStep={setActiveStep} isMobile={isMobile} />
@@ -214,7 +235,13 @@ export const Form = ({ setActiveStep }: FormProps) => {
           </Flex>
         </form>
         {activeFormStep < 4 && (
-          <Button w='100%' mt='20px' onClick={handleGoNextStep}>
+          <Button
+            w='100%'
+            mt='20px'
+            onClick={() => {
+              handleGoNextStep()
+            }}
+          >
             Go to the Next Step
           </Button>
         )}

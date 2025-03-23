@@ -1,5 +1,5 @@
 import { Flex, Text } from '@chakra-ui/react'
-import { type Control, Controller, type FormState } from 'react-hook-form'
+import { type Control, Controller, type FieldErrors } from 'react-hook-form'
 import 'react-phone-number-input/style.css'
 import { CustomizedInput } from 'shared/components/input'
 
@@ -7,10 +7,10 @@ import type { FormFields } from '../'
 
 type Step1Props = {
   control: Control<FormFields, any>
-  formState: FormState<FormFields>
+  errors: FieldErrors<FormFields>
 }
 
-export const Step1 = ({ control, formState }: Step1Props) => {
+export const Step1 = ({ control, errors }: Step1Props) => {
   return (
     <Flex w='100%' flexDir='column' gap='md'>
       <Text textStyle='subheader' color='blue.dark'>
@@ -34,7 +34,7 @@ export const Step1 = ({ control, formState }: Step1Props) => {
                 onChange: controllerOnChange,
               },
             }) => {
-              const haveError = formState?.errors?.[1]?.city
+              const haveError = errors?.[1]?.city
 
               return (
                 <CustomizedInput
@@ -52,9 +52,9 @@ export const Step1 = ({ control, formState }: Step1Props) => {
               )
             }}
           />
-          {formState?.errors?.[1]?.city && (
+          {errors?.[1]?.city && (
             <Text fontSize='13px' color='error'>
-              {formState?.errors?.[1]?.city?.message}
+              {errors?.[1]?.city?.message}
             </Text>
           )}
         </Flex>
@@ -76,7 +76,7 @@ export const Step1 = ({ control, formState }: Step1Props) => {
                 onChange: controllerOnChange,
               },
             }) => {
-              const haveError = formState?.errors?.[1]?.street
+              const haveError = errors?.[1]?.street
 
               return (
                 <CustomizedInput
@@ -94,9 +94,9 @@ export const Step1 = ({ control, formState }: Step1Props) => {
               )
             }}
           />
-          {formState?.errors?.[1]?.street && (
+          {errors?.[1]?.street && (
             <Text fontSize='13px' color='error'>
-              {formState?.errors?.[1]?.street?.message}
+              {errors?.[1]?.street?.message}
             </Text>
           )}
         </Flex>
@@ -118,7 +118,7 @@ export const Step1 = ({ control, formState }: Step1Props) => {
                 onChange: controllerOnChange,
               },
             }) => {
-              const haveError = formState?.errors?.[1]?.state
+              const haveError = errors?.[1]?.state
 
               return (
                 <CustomizedInput
@@ -136,9 +136,9 @@ export const Step1 = ({ control, formState }: Step1Props) => {
               )
             }}
           />
-          {formState?.errors?.[1]?.state && (
+          {errors?.[1]?.state && (
             <Text fontSize='13px' color='error'>
-              {formState?.errors?.[1]?.state?.message}
+              {errors?.[1]?.state?.message}
             </Text>
           )}
         </Flex>
@@ -160,7 +160,7 @@ export const Step1 = ({ control, formState }: Step1Props) => {
                 onChange: controllerOnChange,
               },
             }) => {
-              const haveError = formState?.errors?.[1]?.zip
+              const haveError = errors?.[1]?.zip
 
               return (
                 <CustomizedInput
@@ -178,9 +178,9 @@ export const Step1 = ({ control, formState }: Step1Props) => {
               )
             }}
           />
-          {formState?.errors?.[1]?.zip && (
+          {errors?.[1]?.zip && (
             <Text fontSize='13px' color='error'>
-              {formState?.errors?.[1]?.zip?.message}
+              {errors?.[1]?.zip?.message}
             </Text>
           )}
         </Flex>

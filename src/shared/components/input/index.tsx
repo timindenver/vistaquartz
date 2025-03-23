@@ -1,6 +1,10 @@
+import type { RefAttributes } from 'react'
+
 import { Input, type InputProps } from '@chakra-ui/react'
 
-export const CustomizedInput = ({ ...props }: InputProps) => {
+export const CustomizedInput = ({
+  ...props
+}: InputProps & RefAttributes<HTMLInputElement>) => {
   return (
     <Input
       w='100%'

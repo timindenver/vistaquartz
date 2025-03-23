@@ -1,5 +1,5 @@
 import { Flex, Text } from '@chakra-ui/react'
-import { type Control, Controller, type FormState } from 'react-hook-form'
+import { type Control, Controller, type FieldErrors } from 'react-hook-form'
 import { CustomizedCheckbox } from 'shared/components/checkbox'
 
 import type { FormFields } from '../'
@@ -7,10 +7,10 @@ import './styles.scss'
 
 type Step2Props = {
   control: Control<FormFields, any>
-  formState: FormState<FormFields>
+  errors: FieldErrors<FormFields>
 }
 
-export const Step2 = ({ control, formState }: Step2Props) => {
+export const Step2 = ({ control, errors }: Step2Props) => {
   return (
     <Flex flexDir='column' gap='40px'>
       <Flex flexDir='column' gap='20px'>
@@ -67,9 +67,9 @@ export const Step2 = ({ control, formState }: Step2Props) => {
               )
             }}
           />
-          {formState?.errors?.[2]?.estimateReceiveMethod && (
+          {errors?.[2]?.estimateReceiveMethod && (
             <Text fontSize='13px' color='error'>
-              {formState?.errors?.[2]?.estimateReceiveMethod?.message}
+              {errors?.[2]?.estimateReceiveMethod?.message}
             </Text>
           )}
         </Flex>
@@ -129,9 +129,9 @@ export const Step2 = ({ control, formState }: Step2Props) => {
               )
             }}
           />
-          {formState?.errors?.[2]?.confirmation && (
+          {errors?.[2]?.confirmation && (
             <Text fontSize='13px' color='error'>
-              {formState?.errors?.[2]?.confirmation?.message}
+              {errors?.[2]?.confirmation?.message}
             </Text>
           )}
         </Flex>
