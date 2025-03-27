@@ -256,17 +256,25 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
                       />
                     </Flex>
                   </Flex>
-                  <Text textStyle='description' color='blue.dark'>
-                    Selections will be shown in price estimate but not in design
-                    preview
+                  <Text
+                    textStyle='description'
+                    color='blue.dark'
+                    fontStyle='italic'
+                  >
+                    Selections will be included in price estimate but not in
+                    design preview
                   </Text>
                 </Flex>
               )}
               {(selectedAdditionalItems?.open || isMobile) && (
                 <Flex flexDir='column' gap='4px'>
                   {isMobile && (
-                    <Text textStyle='description' color='blue.dark'>
-                      Selections will be shown in price estimate but not in
+                    <Text
+                      textStyle='description'
+                      color='blue.dark'
+                      fontStyle='italic'
+                    >
+                      Selections will be included in price estimate but not in
                       design preview
                     </Text>
                   )}
