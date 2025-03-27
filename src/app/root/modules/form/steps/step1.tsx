@@ -66,7 +66,7 @@ export const Step1 = ({ control, errors }: Step1Props) => {
             rules={{
               required: {
                 value: true,
-                message: 'Please enter your street',
+                message: 'Please enter full street address',
               },
             }}
             render={({
@@ -83,7 +83,7 @@ export const Step1 = ({ control, errors }: Step1Props) => {
                   name={controllerName}
                   value={controllerValue}
                   onChange={controllerOnChange}
-                  placeholder='Street'
+                  placeholder='Street Address'
                   borderColor={haveError ? 'error' : 'transparent'}
                   outline={
                     haveError

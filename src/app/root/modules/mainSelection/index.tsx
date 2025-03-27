@@ -228,32 +228,38 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
           {(!isMobile || openTab === 'additional') && (
             <Flex w='100%' flexDir='column' gap='md'>
               {!isMobile && (
-                <Flex
-                  w='fit-content'
-                  alignItems='center'
-                  gap='md'
-                  cursor='pointer'
-                  onClick={() => {
-                    setSelectedAdditionalItems((prev) => ({
-                      ...prev,
-                      open: !prev.open,
-                    }))
-                  }}
-                >
-                  <Text textStyle='subheader' color='blue.dark'>
-                    Additional items
-                  </Text>
+                <Flex flexDir='column' gap='8px'>
                   <Flex
-                    transform={
-                      selectedAdditionalItems?.open ? 'rotate(180deg)' : ''
-                    }
+                    w='fit-content'
+                    alignItems='center'
+                    gap='md'
+                    cursor='pointer'
+                    onClick={() => {
+                      setSelectedAdditionalItems((prev) => ({
+                        ...prev,
+                        open: !prev.open,
+                      }))
+                    }}
                   >
-                    <ArrowDown
-                      width='24px'
-                      height='14px'
-                      color='var(--chakra-colors-blue-dark)'
-                    />
+                    <Text textStyle='subheader' color='blue.dark'>
+                      Additional items
+                    </Text>
+                    <Flex
+                      transform={
+                        selectedAdditionalItems?.open ? 'rotate(180deg)' : ''
+                      }
+                    >
+                      <ArrowDown
+                        width='24px'
+                        height='14px'
+                        color='var(--chakra-colors-blue-dark)'
+                      />
+                    </Flex>
                   </Flex>
+                  <Text textStyle='description' color='blue.dark'>
+                    Selections will be shown in price estimate but not in design
+                    preview
+                  </Text>
                 </Flex>
               )}
               {(selectedAdditionalItems?.open || isMobile) && (
@@ -338,12 +344,14 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
             setActiveStep(0)
           }}
         >
-          <ShowerIcon
-            width={isMobile ? '17px' : '13px'}
-            height={isMobile ? '23px' : '17px'}
-            color='white'
-          />
-          {!isMobile && 'Shower'}
+          {isMobile && (
+            <ShowerIcon
+              width={isMobile ? '17px' : '13px'}
+              height={isMobile ? '23px' : '17px'}
+              color='white'
+            />
+          )}
+          {!isMobile && 'Re·start'}
         </Button>
         <Tooltip
           open={infoTooltipOpen}

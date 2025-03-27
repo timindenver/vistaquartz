@@ -24,6 +24,7 @@ export const WallColorSelector = ({
     <Grid
       h='fit-content'
       gridTemplateColumns='repeat(auto-fill, minmax(43px, 1fr))'
+      gapY={{ base: 'md', xl: 'unset' }}
     >
       {wallColorOptions?.map((wallColorOption) => {
         const isSelected = selectedWallColor === wallColorOption?.value
@@ -33,6 +34,7 @@ export const WallColorSelector = ({
             key={wallColorOption?.value + 79845}
             gridColumn={isSelected ? 'auto / span 3' : 'auto'}
             flexDir='column'
+            pos='relative'
             cursor='pointer'
             onClick={() => {
               setSelectedWallColor(wallColorOption?.value)
@@ -60,11 +62,15 @@ export const WallColorSelector = ({
             </Flex>
             {isSelected && (
               <Flex
+                w='100%'
                 h='34px'
                 minH='fit-content'
                 alignItems='center'
                 justifyContent='center'
                 bg='blue.medium'
+                pos={{ base: 'absolute', xl: 'unset' }}
+                left='0'
+                bottom='0'
               >
                 <Text
                   textStyle='description'
