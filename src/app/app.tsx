@@ -20,7 +20,7 @@ export default function App() {
       <SelectionProvider>
         <Routes>
           <Route path='/' element={<Root />} />
-          {/* <Route path='*' element={<NotFound />} /> */}
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </SelectionProvider>
     </BrowserRouter>

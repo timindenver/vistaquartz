@@ -1,7 +1,12 @@
-import { type Dispatch, type SetStateAction, useState } from 'react'
+import { type Dispatch, type SetStateAction, useRef, useState } from 'react'
 
 import { Button, Flex, Text, useBreakpointValue } from '@chakra-ui/react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { submitData } from 'core/api/submit'
+import type { FormFields } from 'core/context/form'
+import { useSelection } from 'core/context/selection'
+import rn from 'random-number'
+import { useFormContext } from 'react-hook-form'
+import type { ImageListType } from 'react-images-uploading'
 import ArrowLeftIcon from 'shared/assets/icons/arrowLeft'
 
 import { Step0 } from './steps/step0'
@@ -13,27 +18,6 @@ import { Step4 } from './steps/step4'
 type FormProps = {
   setActiveStep: Dispatch<SetStateAction<number>>
 }
-
-export type FormFields = [
-  {
-    firstName: string
-    lastName: string
-    phone: string
-  },
-  {
-    city: string
-    street: string
-    state: string
-    zip: string
-  },
-  {
-    estimateReceiveMethod: 'text' | 'email' | ''
-    confirmation: 'owner' | 'non-owner' | ''
-  },
-  {
-    images?: any
-  },
-]
 
 export type FORM_STEPS_TYPE = {
   title: string
@@ -55,69 +39,74 @@ const FORM_STEPS: FORM_STEPS_TYPE = [
 ]
 
 export const Form = ({ setActiveStep }: FormProps) => {
+  const selection = useSelection()
   const isMobile = useBreakpointValue({ base: true, xl: false })
+
+  const verificationCode = useRef(rn({ min: 10000, max: 99999, integer: true }))
   const [activeFormStep, setActiveFormStep] = useState(0)
+  const [uploadedImages, setUploadedImages] = useState<ImageListType>([])
 
   const {
-    control,
-    handleSubmit,
+    getValues,
     trigger,
-    formState: { isValid, errors },
-  } = useForm<FormFields>({
-    mode: 'onChange',
-    reValidateMode: 'onChange',
-    defaultValues: [
-      {
-        firstName: '',
-        lastName: '',
-        phone: '',
-      },
-      {
-        city: '',
-        state: '',
-        street: '',
-        zip: '',
-      },
-      {
-        estimateReceiveMethod: '',
-        confirmation: '',
-      },
-      {
-        images: [],
-      },
-    ],
-  })
+    formState: { isValid },
+  } = useFormContext<FormFields>()
 
-  const onSubmit: SubmitHandler<FormFields> = (data) => {
-    console.log(data)
+  window.onbeforeunload = async () => {
+    if (!isValid || activeFormStep !== 4) {
+      await handleSubmitRequest()
+    }
   }
 
-  const handleGoNextStep = () => {
+  const handleGoNextStep = async () => {
     trigger()
 
     if (!isValid) {
       return
     }
 
+    if (activeFormStep === 3) {
+      await handleSubmitRequest()
+    }
+
     setActiveFormStep((prev) => prev + 1)
   }
 
+  const handleSubmitRequest = async () => {
+    const formData = getValues()
+
+    const { items: fixtureOptionItems } = selection?.selectionData?.fixtureOption ?? {}
+    const validKeys: (keyof typeof fixtureOptionItems)[] = ['handShowerWand', 'shelf']
+    const plumbingFixturesItems = validKeys.filter((key) => fixtureOptionItems?.[key])
+
+    const additionalItems = selection?.selectionData?.additionalItems
+
+    await submitData({
+      body: {
+        layout: selection?.selectionData?.layout || '',
+        handling: selection?.selectionData?.handling || '',
+        wallcolor: selection?.selectionData?.wallColor,
+        plumbingFixturesColor: selection?.selectionData?.fixtureOption?.color,
+        plumbingFixturesItems: plumbingFixturesItems?.length > 0 ? JSON.stringify(plumbingFixturesItems) : null,
+        additionalItems: additionalItems?.length > 0 ? JSON.stringify(additionalItems) : null,
+        name: formData?.[0]?.firstName,
+        lastName: formData?.[0]?.lastName,
+        phone: formData?.[0]?.phone,
+        city: formData?.[1]?.city,
+        street: formData?.[1]?.street,
+        state: formData?.[1]?.state,
+        zip: formData?.[1]?.zip,
+        receivingMethod: formData?.[2]?.estimateReceiveMethod,
+        propertyOwner: formData?.[2]?.confirmation,
+        images: uploadedImages?.length > 0 ? uploadedImages : null,
+      },
+    })
+  }
+
   return (
-    <Flex
-      w='100%'
-      h='100%'
-      minH='fit-content'
-      flexDir='column'
-      py='32px'
-      pt={{ base: 'md', xl: '32px' }}
-    >
+    <Flex w='100%' h='100%' minH='fit-content' flexDir='column' py='32px' pt={{ base: 'md', xl: '32px' }}>
       {activeFormStep < 4 && (
-        <Flex
-          w='100%'
-          h='fit-content'
-          alignItems='center'
-          px={{ base: 'unset', xl: '32px' }}
-        >
+        <Flex w='100%' h='fit-content' alignItems='center' px={{ base: 'unset', xl: '32px' }}>
           {!isMobile && (
             <Flex
               flex={1}
@@ -128,11 +117,7 @@ export const Form = ({ setActiveStep }: FormProps) => {
                 setActiveStep(1)
               }}
             >
-              <ArrowLeftIcon
-                width='12.16px'
-                height='20.38px'
-                color='var(--chakra-colors-blue-dark)'
-              />
+              <ArrowLeftIcon width='12.16px' height='20.38px' color='var(--chakra-colors-blue-dark)' />
               <Text textStyle='smallText' color='blue.dark'>
                 Configurator
               </Text>
@@ -152,13 +137,7 @@ export const Form = ({ setActiveStep }: FormProps) => {
                 const isActive = activeFormStep >= formStepIndex
 
                 return (
-                  <Flex
-                    key={formStep?.title + formStepIndex + 99948}
-                    flexDir={{ base: 'column', xl: 'row' }}
-                    w='fit-content'
-                    alignItems='center'
-                    gap={{ base: '8px', xl: 'md' }}
-                  >
+                  <Flex key={formStep?.title + formStepIndex + 99948} flexDir={{ base: 'column', xl: 'row' }} w='fit-content' alignItems='center' gap={{ base: '8px', xl: 'md' }}>
                     <Flex
                       w='24px'
                       h='24px'
@@ -170,18 +149,11 @@ export const Form = ({ setActiveStep }: FormProps) => {
                       alignItems='center'
                       justifyContent='center'
                     >
-                      <Text
-                        textStyle='description'
-                        color={isActive ? 'white' : 'blue.medium'}
-                        pt='1px'
-                      >
+                      <Text textStyle='description' color={isActive ? 'white' : 'blue.medium'} pt='1px'>
                         {formStepIndex + 1}
                       </Text>
                     </Flex>
-                    <Text
-                      textStyle='smallText'
-                      color={isActive ? 'blue.dark' : 'blue.medium'}
-                    >
+                    <Text textStyle='smallText' color={isActive ? 'blue.dark' : 'blue.medium'}>
                       {formStep.title}
                     </Text>
                   </Flex>
@@ -193,16 +165,7 @@ export const Form = ({ setActiveStep }: FormProps) => {
         </Flex>
       )}
 
-      <Flex
-        w='100%'
-        maxW='520px'
-        h='100%'
-        flexDir='column'
-        justifyContent='space-between'
-        mx='auto'
-        mt='32px'
-        px={{ base: 'md', xl: 'unset' }}
-      >
+      <Flex w='100%' maxW='520px' h='100%' flexDir='column' justifyContent='space-between' mx='auto' mt='32px' px={{ base: 'md', xl: 'unset' }}>
         {activeFormStep === 0 && (
           <Text textStyle='header' color='blue.dark' textAlign='center'>
             We have the specs needed to prepare your estimate
@@ -210,28 +173,17 @@ export const Form = ({ setActiveStep }: FormProps) => {
         )}
 
         <form
-          onSubmit={handleSubmit(onSubmit)}
           style={{
             margin: isMobile || activeFormStep !== 0 ? 'auto 0' : 'unset',
             height: '100%',
           }}
         >
           <Flex w='100%' h='100%' alignItems='center'>
-            {activeFormStep === 0 && (
-              <Step0 control={control} errors={errors} />
-            )}
-            {activeFormStep === 1 && (
-              <Step1 control={control} errors={errors} />
-            )}
-            {activeFormStep === 2 && (
-              <Step2 control={control} errors={errors} />
-            )}
-            {activeFormStep === 3 && (
-              <Step3 control={control} isMobile={isMobile} />
-            )}
-            {activeFormStep === 4 && (
-              <Step4 setActiveStep={setActiveStep} isMobile={isMobile} />
-            )}
+            {activeFormStep === 0 && <Step0 />}
+            {activeFormStep === 1 && <Step1 />}
+            {activeFormStep === 2 && <Step2 />}
+            {activeFormStep === 3 && <Step3 uploadedImages={uploadedImages} setUploadedImages={setUploadedImages} isMobile={isMobile} />}
+            {activeFormStep === 4 && <Step4 setActiveStep={setActiveStep} receivingMethod={getValues()?.[2]?.estimateReceiveMethod} isMobile={isMobile} />}
           </Flex>
         </form>
         {activeFormStep < 4 && (

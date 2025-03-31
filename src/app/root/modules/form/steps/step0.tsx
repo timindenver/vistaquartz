@@ -1,18 +1,18 @@
 import { Flex, Text } from '@chakra-ui/react'
-import { type Control, Controller, type FieldErrors } from 'react-hook-form'
+import type { FormFields } from 'core/context/form'
+import { Controller, useFormContext } from 'react-hook-form'
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { CustomizedInput } from 'shared/components/input'
 
-import type { FormFields } from '../'
 import './styles.scss'
 
-type Step0Props = {
-  control: Control<FormFields, any>
-  errors: FieldErrors<FormFields>
-}
+export const Step0 = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<FormFields>()
 
-export const Step0 = ({ control, errors }: Step0Props) => {
   return (
     <Flex w='100%' flexDir='column' gap='md'>
       <Text textStyle='subheader' color='blue.dark'>
@@ -29,15 +29,7 @@ export const Step0 = ({ control, errors }: Step0Props) => {
                 message: 'Please enter your first name',
               },
             }}
-            render={({
-              field: {
-                name: controllerName,
-                ref: controllerRef,
-                value: controllerValue,
-                onChange: controllerOnChange,
-                onBlur: controllerOnBlur,
-              },
-            }) => {
+            render={({ field: { name: controllerName, ref: controllerRef, value: controllerValue, onChange: controllerOnChange, onBlur: controllerOnBlur } }) => {
               const haveError = errors?.[0]?.firstName
 
               return (
@@ -49,11 +41,7 @@ export const Step0 = ({ control, errors }: Step0Props) => {
                   onBlur={controllerOnBlur}
                   placeholder='First Name'
                   borderColor={haveError ? 'error' : 'transparent'}
-                  outline={
-                    haveError
-                      ? 'var(--chakra-colors-error)'
-                      : 'focus-ring-color'
-                  }
+                  outline={haveError ? 'var(--chakra-colors-error)' : 'focus-ring-color'}
                 />
               )
             }}
@@ -72,15 +60,7 @@ export const Step0 = ({ control, errors }: Step0Props) => {
             rules={{
               required: { value: true, message: 'Please enter your last name' },
             }}
-            render={({
-              field: {
-                name: controllerName,
-                ref: controllerRef,
-                value: controllerValue,
-                onChange: controllerOnChange,
-                onBlur: controllerOnBlur,
-              },
-            }) => {
+            render={({ field: { name: controllerName, ref: controllerRef, value: controllerValue, onChange: controllerOnChange, onBlur: controllerOnBlur } }) => {
               const haveError = errors?.[0]?.lastName
 
               return (
@@ -92,11 +72,7 @@ export const Step0 = ({ control, errors }: Step0Props) => {
                   onBlur={controllerOnBlur}
                   placeholder='Last Name'
                   borderColor={haveError ? 'error' : 'transparent'}
-                  outline={
-                    haveError
-                      ? 'var(--chakra-colors-error)'
-                      : 'focus-ring-color'
-                  }
+                  outline={haveError ? 'var(--chakra-colors-error)' : 'focus-ring-color'}
                 />
               )
             }}
@@ -118,15 +94,7 @@ export const Step0 = ({ control, errors }: Step0Props) => {
                 message: 'Please enter your phone number',
               },
             }}
-            render={({
-              field: {
-                name: controllerName,
-                ref: controllerRef,
-                value: controllerValue,
-                onChange: controllerOnChange,
-                onBlur: controllerOnBlur,
-              },
-            }) => {
+            render={({ field: { name: controllerName, ref: controllerRef, value: controllerValue, onChange: controllerOnChange, onBlur: controllerOnBlur } }) => {
               const haveError = errors?.[0]?.phone
 
               return (

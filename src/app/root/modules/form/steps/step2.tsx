@@ -1,16 +1,16 @@
-import { Flex, Text } from '@chakra-ui/react'
-import { type Control, Controller, type FieldErrors } from 'react-hook-form'
+import { Flex, Grid, Text } from '@chakra-ui/react'
+import type { FormFields } from 'core/context/form'
+import { Controller, useFormContext } from 'react-hook-form'
 import { CustomizedCheckbox } from 'shared/components/checkbox'
 
-import type { FormFields } from '../'
 import './styles.scss'
 
-type Step2Props = {
-  control: Control<FormFields, any>
-  errors: FieldErrors<FormFields>
-}
+export const Step2 = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<FormFields>()
 
-export const Step2 = ({ control, errors }: Step2Props) => {
   return (
     <Flex flexDir='column' gap='40px'>
       <Flex flexDir='column' gap='20px'>
@@ -27,15 +27,9 @@ export const Step2 = ({ control, errors }: Step2Props) => {
                 message: 'Please enter your prefered method',
               },
             }}
-            render={({
-              field: {
-                name: controllerName,
-                value: controllerValue,
-                onChange: controllerOnChange,
-              },
-            }) => {
+            render={({ field: { name: controllerName, value: controllerValue, onChange: controllerOnChange } }) => {
               return (
-                <Flex>
+                <Grid gridTemplateColumns='repeat(2, 1fr)'>
                   <CustomizedCheckbox
                     root={{
                       name: controllerName,
@@ -43,8 +37,9 @@ export const Step2 = ({ control, errors }: Step2Props) => {
                       onCheckedChange: (event) => {
                         event.checked && controllerOnChange('text')
                       },
-                      flex: 1,
+                      w: 'fit-content',
                       size: 'lg',
+                      cursor: 'pointer',
                     }}
                     label={{ value: 'Send text' }}
                     custom={{ shape: 'Square' }}
@@ -57,13 +52,14 @@ export const Step2 = ({ control, errors }: Step2Props) => {
                       onCheckedChange: (event) => {
                         event.checked && controllerOnChange('email')
                       },
-                      flex: 1,
+                      w: 'fit-content',
                       size: 'lg',
+                      cursor: 'pointer',
                     }}
                     label={{ value: 'Send email' }}
                     custom={{ shape: 'Square' }}
                   />
-                </Flex>
+                </Grid>
               )
             }}
           />
@@ -89,15 +85,9 @@ export const Step2 = ({ control, errors }: Step2Props) => {
                 message: 'Please confirm that you are the owner',
               },
             }}
-            render={({
-              field: {
-                name: controllerName,
-                value: controllerValue,
-                onChange: controllerOnChange,
-              },
-            }) => {
+            render={({ field: { name: controllerName, value: controllerValue, onChange: controllerOnChange } }) => {
               return (
-                <Flex>
+                <Grid gridTemplateColumns='repeat(2, 1fr)'>
                   <CustomizedCheckbox
                     root={{
                       name: controllerName,
@@ -105,8 +95,9 @@ export const Step2 = ({ control, errors }: Step2Props) => {
                       onCheckedChange: (event) => {
                         event.checked && controllerOnChange('owner')
                       },
-                      flex: 1,
+                      w: 'fit-content',
                       size: 'lg',
+                      cursor: 'pointer',
                     }}
                     label={{ value: 'Yes, I am owner' }}
                     custom={{ shape: 'Round' }}
@@ -119,13 +110,14 @@ export const Step2 = ({ control, errors }: Step2Props) => {
                       onCheckedChange: (event) => {
                         event.checked && controllerOnChange('non-owner')
                       },
-                      flex: 1,
+                      w: 'fit-content',
                       size: 'lg',
+                      cursor: 'pointer',
                     }}
                     label={{ value: 'No, I am not an owner' }}
                     custom={{ shape: 'Round' }}
                   />
-                </Flex>
+                </Grid>
               )
             }}
           />

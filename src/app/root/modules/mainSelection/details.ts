@@ -57,7 +57,7 @@ export type DefaultWallColorOptions = {
   }
 }[]
 
-const defaultWallColorOptions: DefaultWallColorOptions = [
+export const defaultWallColorOptions: DefaultWallColorOptions = [
   {
     name: 'Diamond Creme',
     value: 'diamondCreme',
@@ -173,7 +173,7 @@ export type DefaultFixtureOption = {
   }[]
 }
 
-const defaultFixtureOptions: DefaultFixtureOption[] = [
+export const defaultFixtureOptions: DefaultFixtureOption[] = [
   {
     value: 'matteBlack',
     name: 'Matte Black',

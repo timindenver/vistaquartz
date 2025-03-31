@@ -1,12 +1,6 @@
 import { type Dispatch, type SetStateAction, useState } from 'react'
 
-import {
-  Button,
-  Flex,
-  Separator,
-  Text,
-  useBreakpointValue,
-} from '@chakra-ui/react'
+import { Button, Flex, Separator, Text, useBreakpointValue } from '@chakra-ui/react'
 import { recipes } from 'components/ui/theme/recipes'
 import { Tooltip } from 'components/ui/tooltip'
 import { useSelection } from 'core/context/selection'
@@ -22,10 +16,7 @@ import DrawIcon from 'shared/assets/icons/draw'
 import ShowerIcon from 'shared/assets/icons/shower'
 import ZoomIcon from 'shared/assets/icons/zoom'
 
-import {
-  type DefaultAdditionalOptionValues,
-  MAIN_LAYOUT_DETAILS,
-} from './details'
+import { type DefaultAdditionalOptionValues, MAIN_LAYOUT_DETAILS } from './details'
 import { AdditionalItemsSelector } from './selectors/additionalItemsSelector'
 import { FixturesSelector } from './selectors/fixturesSelector'
 import { WallColorSelector } from './selectors/wallColorSelector'
@@ -37,36 +28,17 @@ type MainSelectionProps = {
 export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
   const selection = useSelection()
 
-  const { wallColorOptions, fixtureOptions, additionalOptions } =
-    MAIN_LAYOUT_DETAILS?.[selection?.currentSelectionLayout]
+  const { wallColorOptions, fixtureOptions, additionalOptions } = MAIN_LAYOUT_DETAILS?.[selection?.selectionData?.layout || 'showerStall']
 
   const [infoTooltipOpen, setInfoTooltipOpen] = useState(false)
-  const [selectedWallColor, setSelectedWallColor] = useState(
-    wallColorOptions?.[0]?.value
-  )
-  const [selectedFixtureOption, setSelectedFixtureOption] = useState({
-    color: fixtureOptions?.[0]?.value,
-    items: {
-      handShowerWand: false,
-      shelf: false,
-    },
-  })
-  const [selectedAdditionalItems, setSelectedAdditionalItems] = useState<{
-    open: boolean
-    items: DefaultAdditionalOptionValues[]
-  }>({
-    open: false,
-    items: [],
-  })
-  const [openTab, setOpenTab] = useState<'wallColor' | 'finish' | 'additional'>(
-    'wallColor'
-  )
+  const [additionalItemsOpen, setAdditionalItemsOpen] = useState(false)
+  const [openTab, setOpenTab] = useState<'wallColor' | 'finish' | 'additional'>('wallColor')
 
   const { image: activeImageURL, name: activeImageName } = useFinalRenders({
     fileName: getImageFilename({
       selection,
-      selectedFixtureOption,
-      selectedWallColor,
+      selectedFixtureOption: selection?.selectionData?.fixtureOption,
+      selectedWallColor: selection?.selectionData?.wallColor,
     }),
   })
 
@@ -86,17 +58,8 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
       flexDir={{ base: 'column', xl: 'row' }}
       alignItems='center'
     >
-      <Flex
-        w='calc(100% - 32px)'
-        maxW={{ base: '343px', xl: '592px' }}
-        pos='relative'
-      >
-        <InnerImageZoom
-          src={activeImageURL}
-          zoomScale={1}
-          hideCloseButton
-          hideHint
-        />
+      <Flex w='calc(100% - 32px)' maxW={{ base: '343px', xl: '592px' }} pos='relative'>
+        <InnerImageZoom src={activeImageURL} zoomScale={1} hideCloseButton hideHint />
         <Flex
           w='44px'
           h='44px'
@@ -114,34 +77,16 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
           <ZoomIcon color='white' />
         </Flex>
       </Flex>
-      <Flex
-        w='100%'
-        maxW='695px'
-        h='100%'
-        maxH='inherit'
-        flexDir='column'
-        justifyContent='space-between'
-        bg='white'
-        py={{ base: 'md', xl: '26px' }}
-        px={{ base: 'md', xl: '44px' }}
-        gap='md'
-      >
+      <Flex w='100%' maxW='695px' h='100%' maxH='inherit' flexDir='column' justifyContent='space-between' bg='white' py={{ base: 'md', xl: '26px' }} px={{ base: 'md', xl: '44px' }} gap='md'>
         <Flex w='100%' h='100%' flexDir='column' overflowY='auto'>
           {isMobile && (
-            <Flex
-              w='100%'
-              alignItems='center'
-              justifyContent='space-between'
-              mb='md'
-            >
+            <Flex w='100%' alignItems='center' justifyContent='space-between' mb='md'>
               <Text
                 textStyle='subheader'
                 color='blue.dark'
                 textAlign='center'
                 borderBottom='2px solid'
-                borderColor={
-                  openTab === 'wallColor' ? 'blue.dark' : 'transparent'
-                }
+                borderColor={openTab === 'wallColor' ? 'blue.dark' : 'transparent'}
                 cursor='pointer'
                 onClick={() => {
                   setOpenTab('wallColor')
@@ -167,9 +112,7 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
                 color='blue.dark'
                 textAlign='center'
                 borderBottom='2px solid'
-                borderColor={
-                  openTab === 'additional' ? 'blue.dark' : 'transparent'
-                }
+                borderColor={openTab === 'additional' ? 'blue.dark' : 'transparent'}
                 cursor='pointer'
                 onClick={() => {
                   setOpenTab('additional')
@@ -185,46 +128,18 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
                 Select wall color
               </Text>
             )}
-            {(!isMobile || openTab === 'wallColor') && (
-              <WallColorSelector
-                wallColorOptions={wallColorOptions}
-                selectedWallColor={selectedWallColor}
-                setSelectedWallColor={setSelectedWallColor}
-              />
-            )}
+            {(!isMobile || openTab === 'wallColor') && <WallColorSelector wallColorOptions={wallColorOptions} />}
           </Flex>
-          {!isMobile && (
-            <Separator
-              orientation='horizontal'
-              borderColor='blue.dark'
-              my='28px'
-            />
-          )}
-          <Flex
-            w='100%'
-            flexDir='column'
-            gap={!isMobile || openTab === 'finish' ? 'md' : '0'}
-          >
+          {!isMobile && <Separator orientation='horizontal' borderColor='blue.dark' my='28px' />}
+          <Flex w='100%' flexDir='column' gap={!isMobile || openTab === 'finish' ? 'md' : '0'}>
             {!isMobile && (
               <Text textStyle='subheader' color='blue.dark'>
                 Select finish to plumbing fixtures
               </Text>
             )}
-            {(!isMobile || openTab === 'finish') && (
-              <FixturesSelector
-                fixtureOptions={fixtureOptions}
-                selectedFixtureOption={selectedFixtureOption}
-                setSelectedFixtureOption={setSelectedFixtureOption}
-              />
-            )}
+            {(!isMobile || openTab === 'finish') && <FixturesSelector fixtureOptions={fixtureOptions} />}
           </Flex>
-          {!isMobile && (
-            <Separator
-              orientation='horizontal'
-              borderColor='blue.dark'
-              my='28px'
-            />
-          )}
+          {!isMobile && <Separator orientation='horizontal' borderColor='blue.dark' my='28px' />}
           {(!isMobile || openTab === 'additional') && (
             <Flex w='100%' flexDir='column' gap='md'>
               {!isMobile && (
@@ -235,67 +150,36 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
                     gap='md'
                     cursor='pointer'
                     onClick={() => {
-                      setSelectedAdditionalItems((prev) => ({
-                        ...prev,
-                        open: !prev.open,
-                      }))
+                      setAdditionalItemsOpen((prev) => !prev)
                     }}
                   >
                     <Text textStyle='subheader' color='blue.dark'>
                       Additional items
                     </Text>
-                    <Flex
-                      transform={
-                        selectedAdditionalItems?.open ? 'rotate(180deg)' : ''
-                      }
-                    >
-                      <ArrowDown
-                        width='24px'
-                        height='14px'
-                        color='var(--chakra-colors-blue-dark)'
-                      />
+                    <Flex transform={additionalItemsOpen ? 'rotate(180deg)' : ''}>
+                      <ArrowDown width='24px' height='14px' color='var(--chakra-colors-blue-dark)' />
                     </Flex>
                   </Flex>
-                  <Text
-                    textStyle='description'
-                    color='blue.dark'
-                    fontStyle='italic'
-                  >
-                    Selections will be included in price estimate but not in
-                    design preview
+                  <Text textStyle='description' color='blue.dark' fontStyle='italic'>
+                    Selections will be included in price estimate but not in design preview
                   </Text>
                 </Flex>
               )}
-              {(selectedAdditionalItems?.open || isMobile) && (
+              {(additionalItemsOpen || isMobile) && (
                 <Flex flexDir='column' gap='4px'>
                   {isMobile && (
-                    <Text
-                      textStyle='description'
-                      color='blue.dark'
-                      fontStyle='italic'
-                    >
-                      Selections will be included in price estimate but not in
-                      design preview
+                    <Text textStyle='description' color='blue.dark' fontStyle='italic'>
+                      Selections will be included in price estimate but not in design preview
                     </Text>
                   )}
-                  <AdditionalItemsSelector
-                    additionalOptions={additionalOptions}
-                    selectedAdditionalItems={selectedAdditionalItems}
-                    setSelectedAdditionalItems={setSelectedAdditionalItems}
-                    isMobile={isMobile}
-                  />
+                  <AdditionalItemsSelector additionalOptions={additionalOptions} isMobile={isMobile} />
                 </Flex>
               )}
             </Flex>
           )}
         </Flex>
 
-        <Flex
-          w='100%'
-          alignItems='center'
-          justifyContent='space-between'
-          gap={{ base: '7px', xl: 'md' }}
-        >
+        <Flex w='100%' alignItems='center' justifyContent='space-between' gap={{ base: '7px', xl: 'md' }}>
           <Button
             flex='1'
             alignItems='center'
@@ -352,13 +236,7 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
             setActiveStep(0)
           }}
         >
-          {isMobile && (
-            <ShowerIcon
-              width={isMobile ? '17px' : '13px'}
-              height={isMobile ? '23px' : '17px'}
-              color='white'
-            />
-          )}
+          {isMobile && <ShowerIcon width={isMobile ? '17px' : '13px'} height={isMobile ? '23px' : '17px'} color='white' />}
           {!isMobile && 'Re·start'}
         </Button>
         <Tooltip
@@ -376,12 +254,7 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
           closeOnPointerDown={false}
           content={
             <Flex w='100%' flexDir='column' p='md' gap='md'>
-              <Flex
-                w='100%'
-                alignItems='center'
-                justifyContent='space-between'
-                gap='md'
-              >
+              <Flex w='100%' alignItems='center' justifyContent='space-between' gap='md'>
                 <Text textStyle='categories' color='blue.dark'>
                   Information
                 </Text>
@@ -397,12 +270,10 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
               </Flex>
               <Flex flexDir='column' gap='8px'>
                 <Text textStyle='description' color='blue.dark'>
-                  More options are available during your in-home design consult
-                  as well as physical samples.
+                  More options are available during your in-home design consult as well as physical samples.
                 </Text>
                 <Text textStyle='description' color='blue.dark'>
-                  Colors on your screen may not be 100% accurate due to monitor
-                  calibration issues.
+                  Colors on your screen may not be 100% accurate due to monitor calibration issues.
                 </Text>
               </Flex>
             </Flex>
@@ -416,11 +287,7 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
               setInfoTooltipOpen((prev) => !prev)
             }}
           >
-            <ChatInfoIcon
-              width={isMobile ? '21px' : '16px'}
-              height={isMobile ? '21px' : '16px'}
-              color='white'
-            />
+            <ChatInfoIcon width={isMobile ? '21px' : '16px'} height={isMobile ? '21px' : '16px'} color='white' />
             {!isMobile && 'Info'}
           </Button>
         </Tooltip>

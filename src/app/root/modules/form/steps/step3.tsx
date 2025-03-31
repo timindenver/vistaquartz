@@ -1,7 +1,8 @@
-import { useRef, useState } from 'react'
+import { type Dispatch, type SetStateAction, useRef, useState } from 'react'
 
 import { Dialog, Flex, Grid, Image, Portal, Text } from '@chakra-ui/react'
-import { type Control, Controller, type FormState } from 'react-hook-form'
+import type { FormFields } from 'core/context/form'
+import { Controller, useFormContext } from 'react-hook-form'
 import ImageUploading, { ImageListType } from 'react-images-uploading'
 import ArrowLeftIcon from 'shared/assets/icons/arrowLeft'
 import BinIcon from 'shared/assets/icons/bin'
@@ -10,19 +11,14 @@ import CloseIcon from 'shared/assets/icons/close'
 import 'swiper/css'
 import { Swiper, type SwiperRef, SwiperSlide } from 'swiper/react'
 
-import type { FormFields } from '../'
+type Step3Props = { uploadedImages: ImageListType; setUploadedImages: Dispatch<SetStateAction<ImageListType>>; isMobile: boolean | undefined }
 
-type Step3Props = {
-  control: Control<FormFields, any>
-  isMobile: boolean | undefined
-}
+export const Step3 = ({ uploadedImages, setUploadedImages, isMobile }: Step3Props) => {
+  const { control } = useFormContext<FormFields>()
 
-export const Step3 = ({ control, isMobile }: Step3Props) => {
   const maxUploadedImages = 10
-
   const swiperRef = useRef<null | SwiperRef>(null)
 
-  const [uploadedImages, setUploadedImages] = useState<ImageListType>([])
   const [dialog, setDialog] = useState<{
     open: boolean
     activeImageIndex: number | null
@@ -31,10 +27,7 @@ export const Step3 = ({ control, isMobile }: Step3Props) => {
     activeImageIndex: null,
   })
 
-  const onChange = (
-    imageList: ImageListType,
-    addUpdateIndex: number[] | undefined
-  ) => {
+  const onChange = (imageList: ImageListType, addUpdateIndex: number[] | undefined) => {
     setUploadedImages(imageList as never[])
   }
 
@@ -51,12 +44,9 @@ export const Step3 = ({ control, isMobile }: Step3Props) => {
     } else {
       setDialog((prev) => ({
         ...prev,
-        activeImageIndex:
-          activeImageIndex > 0 ? activeImageIndex - 1 : activeImageIndex,
+        activeImageIndex: activeImageIndex > 0 ? activeImageIndex - 1 : activeImageIndex,
       }))
-      setUploadedImages((prev) =>
-        prev.filter((_, index) => index !== activeImageIndex)
-      )
+      setUploadedImages((prev) => prev.filter((_, index) => index !== activeImageIndex))
     }
   }
 
@@ -64,36 +54,16 @@ export const Step3 = ({ control, isMobile }: Step3Props) => {
     <>
       <Flex flexDir='column' gap='md'>
         <Text textStyle='subheader' color='blue.dark'>
-          (Optional) For the most accurate estimate please upload two or three
-          photos of your bath or shower
+          (Optional) For the most accurate estimate please upload two or three photos of your bath or shower
         </Text>
 
         <Controller
           control={control}
           name='3.images'
-          render={({
-            field: {
-              name: controllerName,
-              value: controllerValue,
-              onChange: controllerOnChange,
-            },
-          }) => {
+          render={({ field: { name: controllerName, value: controllerValue, onChange: controllerOnChange } }) => {
             return (
-              <ImageUploading
-                multiple
-                value={uploadedImages}
-                onChange={onChange}
-                maxNumber={maxUploadedImages}
-              >
-                {({
-                  imageList,
-                  onImageUpload,
-                  onImageRemoveAll,
-                  onImageUpdate,
-                  onImageRemove,
-                  isDragging,
-                  dragProps,
-                }) => (
+              <ImageUploading multiple value={uploadedImages} onChange={onChange} maxNumber={maxUploadedImages}>
+                {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
                   <Flex>
                     {uploadedImages.length === 0 ? (
                       <Flex
@@ -110,76 +80,49 @@ export const Step3 = ({ control, isMobile }: Step3Props) => {
                         borderStyle='solid'
                         onClick={onImageUpload}
                       >
-                        <Text
-                          textStyle='smallText'
-                          color='blue.dark'
-                          textAlign='center'
-                        >
+                        <Text textStyle='smallText' color='blue.dark' textAlign='center'>
                           + Upload images
                         </Text>
                       </Flex>
                     ) : (
                       <Flex w='100%' flexDir='column' gap='md'>
-                        <Grid
-                          w='100%'
-                          h='100px'
-                          minH='fit-content'
-                          gap='10px'
-                          gridTemplateColumns='repeat(3, 1fr)'
-                        >
-                          {uploadedImages?.map(
-                            (uploadedImage, uploadedImageIndex) => {
-                              return (
+                        <Grid w='100%' h='100px' minH='fit-content' gap='10px' gridTemplateColumns='repeat(3, 1fr)'>
+                          {uploadedImages?.map((uploadedImage, uploadedImageIndex) => {
+                            return (
+                              <Flex
+                                key={uploadedImageIndex + 46584}
+                                pos='relative'
+                                bg='blue.light'
+                                onClick={() => {
+                                  setDialog({
+                                    open: true,
+                                    activeImageIndex: uploadedImageIndex,
+                                  })
+                                }}
+                              >
+                                <Image maxW={{ base: '109px', xl: '167px' }} maxH={{ base: '78px', xl: '100px' }} objectFit='contain' src={uploadedImage?.dataURL} m='auto' />
                                 <Flex
-                                  key={uploadedImageIndex + 46584}
-                                  pos='relative'
-                                  bg='blue.light'
-                                  onClick={() => {
-                                    setDialog({
-                                      open: true,
-                                      activeImageIndex: uploadedImageIndex,
-                                    })
+                                  w='32px'
+                                  h='32px'
+                                  pos='absolute'
+                                  zIndex='1'
+                                  borderRadius='50%'
+                                  bg='blue.dark'
+                                  alignItems='center'
+                                  justifyContent='center'
+                                  top='4px'
+                                  right='4px'
+                                  cursor='pointer'
+                                  onClick={(event) => {
+                                    event.stopPropagation()
+                                    setUploadedImages((prev) => prev.filter((_, index) => index !== uploadedImageIndex))
                                   }}
                                 >
-                                  <Image
-                                    maxW={{ base: '109px', xl: '167px' }}
-                                    maxH={{ base: '78px', xl: '100px' }}
-                                    objectFit='contain'
-                                    src={uploadedImage?.dataURL}
-                                    m='auto'
-                                  />
-                                  <Flex
-                                    w='32px'
-                                    h='32px'
-                                    pos='absolute'
-                                    zIndex='1'
-                                    borderRadius='50%'
-                                    bg='blue.dark'
-                                    alignItems='center'
-                                    justifyContent='center'
-                                    top='4px'
-                                    right='4px'
-                                    cursor='pointer'
-                                    onClick={(event) => {
-                                      event.stopPropagation()
-                                      setUploadedImages((prev) =>
-                                        prev.filter(
-                                          (_, index) =>
-                                            index !== uploadedImageIndex
-                                        )
-                                      )
-                                    }}
-                                  >
-                                    <BinIcon
-                                      width='16px'
-                                      height='16px'
-                                      color='white'
-                                    />
-                                  </Flex>
+                                  <BinIcon width='16px' height='16px' color='white' />
                                 </Flex>
-                              )
-                            }
-                          )}
+                              </Flex>
+                            )
+                          })}
                         </Grid>
                         <Flex
                           {...dragProps}
@@ -194,11 +137,7 @@ export const Step3 = ({ control, isMobile }: Step3Props) => {
                           borderStyle='solid'
                           onClick={onImageUpload}
                         >
-                          <Text
-                            textStyle='smallText'
-                            color='blue.dark'
-                            textAlign='center'
-                          >
+                          <Text textStyle='smallText' color='blue.dark' textAlign='center'>
                             + Upload more images
                           </Text>
                         </Flex>
@@ -217,9 +156,7 @@ export const Step3 = ({ control, isMobile }: Step3Props) => {
         placement='center'
         motionPreset='slide-in-bottom'
         open={dialog.open}
-        onOpenChange={(event) =>
-          setDialog({ open: event.open, activeImageIndex: null })
-        }
+        onOpenChange={(event) => setDialog({ open: event.open, activeImageIndex: null })}
       >
         {dialog.activeImageIndex !== null && (
           <Portal>
@@ -228,12 +165,7 @@ export const Step3 = ({ control, isMobile }: Step3Props) => {
               <Dialog.Content p={{ base: '0', xl: '28px' }}>
                 {!isMobile && (
                   <Dialog.CloseTrigger p='20px'>
-                    <CloseIcon
-                      width='20px'
-                      height='20px'
-                      color='var(--chakra-colors-blue-dark)'
-                      cursor='pointer'
-                    />
+                    <CloseIcon width='20px' height='20px' color='var(--chakra-colors-blue-dark)' cursor='pointer' />
                   </Dialog.CloseTrigger>
                 )}
                 <Dialog.Header
@@ -245,14 +177,7 @@ export const Step3 = ({ control, isMobile }: Step3Props) => {
                     xl: 'unset',
                   }}
                 >
-                  <Dialog.Title
-                    w='100%'
-                    display='flex'
-                    alignItems='center'
-                    justifyContent={{ base: 'space-between', xl: 'center' }}
-                    pt={{ base: '18px', xl: '0' }}
-                    px={{ base: 'md', xl: '0' }}
-                  >
+                  <Dialog.Title w='100%' display='flex' alignItems='center' justifyContent={{ base: 'space-between', xl: 'center' }} pt={{ base: '18px', xl: '0' }} px={{ base: 'md', xl: '0' }}>
                     {isMobile && (
                       <Flex
                         alignItems='center'
@@ -263,74 +188,31 @@ export const Step3 = ({ control, isMobile }: Step3Props) => {
                           setDialog({ open: false, activeImageIndex: null })
                         }}
                       >
-                        <ArrowLeftIcon
-                          width='10px'
-                          height='16px'
-                          color='var(--chakra-colors-blue-dark)'
-                        />
+                        <ArrowLeftIcon width='10px' height='16px' color='var(--chakra-colors-blue-dark)' />
                         <Text textStyle='smallText' color='blue.dark' mt='2px'>
                           Back
                         </Text>
                       </Flex>
                     )}
-                    <Flex
-                      alignItems='center'
-                      gap='sm'
-                      flex='1'
-                      justifyContent='center'
-                    >
-                      <Text
-                        textStyle='smallText'
-                        color='black'
-                        textAlign='center'
-                      >
-                        Photo {dialog.activeImageIndex + 1} of{' '}
-                        {uploadedImages.length}
+                    <Flex alignItems='center' gap='sm' flex='1' justifyContent='center'>
+                      <Text textStyle='smallText' color='black' textAlign='center'>
+                        Photo {dialog.activeImageIndex + 1} of {uploadedImages.length}
                       </Text>
                       {!isMobile && (
-                        <Flex
-                          mb='2px'
-                          cursor='pointer'
-                          onClick={handleImageDelete}
-                        >
-                          <BinIcon
-                            width='20px'
-                            height='20px'
-                            color='var(--chakra-colors-blue-dark)'
-                          />
+                        <Flex mb='2px' cursor='pointer' onClick={handleImageDelete}>
+                          <BinIcon width='20px' height='20px' color='var(--chakra-colors-blue-dark)' />
                         </Flex>
                       )}
                     </Flex>
                     {isMobile && (
-                      <Flex
-                        cursor='pointer'
-                        flex='1'
-                        onClick={handleImageDelete}
-                        justifyContent='flex-end'
-                      >
-                        <Bin1Icon
-                          width='24px'
-                          height='22px'
-                          color='var(--chakra-colors-blue-dark)'
-                        />
+                      <Flex cursor='pointer' flex='1' onClick={handleImageDelete} justifyContent='flex-end'>
+                        <Bin1Icon width='24px' height='22px' color='var(--chakra-colors-blue-dark)' />
                       </Flex>
                     )}
                   </Dialog.Title>
                 </Dialog.Header>
-                <Dialog.Body
-                  p='0'
-                  py={{ base: '18px', xl: '0' }}
-                  display='flex'
-                >
-                  <Flex
-                    width='100%'
-                    height={{ base: 'unset', xl: '100%' }}
-                    flex='1'
-                    alignItems='center'
-                    justifyContent='space-between'
-                    gap='28px'
-                    pos='relative'
-                  >
+                <Dialog.Body p='0' py={{ base: '18px', xl: '0' }} display='flex'>
+                  <Flex width='100%' height={{ base: 'unset', xl: '100%' }} flex='1' alignItems='center' justifyContent='space-between' gap='28px' pos='relative'>
                     {!isMobile && (
                       <Flex
                         cursor='pointer'
@@ -338,24 +220,16 @@ export const Step3 = ({ control, isMobile }: Step3Props) => {
                         zIndex='2'
                         onClick={() => {
                           if (swiperRef.current) {
-                            const activeIndex =
-                              swiperRef.current.swiper.activeIndex
-                            const slidesLength =
-                              swiperRef.current.swiper.slides.length
+                            const activeIndex = swiperRef.current.swiper.activeIndex
+                            const slidesLength = swiperRef.current.swiper.slides.length
 
                             const isFirstSlide = activeIndex === 0
 
-                            swiperRef.current.swiper.slideTo(
-                              isFirstSlide ? slidesLength - 1 : activeIndex - 1
-                            )
+                            swiperRef.current.swiper.slideTo(isFirstSlide ? slidesLength - 1 : activeIndex - 1)
                           }
                         }}
                       >
-                        <ArrowLeftIcon
-                          width='21px'
-                          height='22px'
-                          color='var(--chakra-colors-blue-dark)'
-                        />
+                        <ArrowLeftIcon width='21px' height='22px' color='var(--chakra-colors-blue-dark)' />
                       </Flex>
                     )}
                     <Swiper
@@ -373,16 +247,7 @@ export const Step3 = ({ control, isMobile }: Step3Props) => {
                       {uploadedImages?.map((uploadedImage) => {
                         return (
                           <SwiperSlide>
-                            <Image
-                              src={uploadedImage.dataURL}
-                              pos='absolute'
-                              top='0'
-                              bottom='0'
-                              left='0'
-                              right='0'
-                              m='auto'
-                              maxH='100%'
-                            />
+                            <Image src={uploadedImage.dataURL} pos='absolute' top='0' bottom='0' left='0' right='0' m='auto' maxH='100%' />
                           </SwiperSlide>
                         )
                       })}
@@ -395,24 +260,16 @@ export const Step3 = ({ control, isMobile }: Step3Props) => {
                         zIndex='2'
                         onClick={() => {
                           if (swiperRef.current) {
-                            const activeIndex =
-                              swiperRef.current.swiper.activeIndex
-                            const slidesLength =
-                              swiperRef.current.swiper.slides.length
+                            const activeIndex = swiperRef.current.swiper.activeIndex
+                            const slidesLength = swiperRef.current.swiper.slides.length
 
                             const isLastSlide = activeIndex < slidesLength - 1
 
-                            swiperRef.current.swiper.slideTo(
-                              isLastSlide ? activeIndex + 1 : 0
-                            )
+                            swiperRef.current.swiper.slideTo(isLastSlide ? activeIndex + 1 : 0)
                           }
                         }}
                       >
-                        <ArrowLeftIcon
-                          width='21px'
-                          height='22px'
-                          color='var(--chakra-colors-blue-dark)'
-                        />
+                        <ArrowLeftIcon width='21px' height='22px' color='var(--chakra-colors-blue-dark)' />
                       </Flex>
                     )}
                   </Flex>

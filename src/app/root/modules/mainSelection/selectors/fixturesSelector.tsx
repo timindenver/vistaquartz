@@ -1,39 +1,18 @@
-import type { Dispatch, SetStateAction } from 'react'
-
 import { Flex, Image, Text } from '@chakra-ui/react'
 import { Checkbox } from 'components/ui/checkbox'
+import { useSelection } from 'core/context/selection'
 
-import type {
-  DefaultFixtureOption,
-  DefaultFixtureOptionValues,
-} from '../details'
+import type { DefaultFixtureOption } from '../details'
 import css from '../styles.module.scss'
 
 type FixturesSelectorProps = {
   fixtureOptions: DefaultFixtureOption[]
-  selectedFixtureOption: {
-    color: DefaultFixtureOptionValues
-    items: {
-      handShowerWand: boolean
-      shelf: boolean
-    }
-  }
-  setSelectedFixtureOption: Dispatch<
-    SetStateAction<{
-      color: DefaultFixtureOptionValues
-      items: {
-        handShowerWand: boolean
-        shelf: boolean
-      }
-    }>
-  >
 }
 
-export const FixturesSelector = ({
-  fixtureOptions,
-  selectedFixtureOption,
-  setSelectedFixtureOption,
-}: FixturesSelectorProps) => {
+export const FixturesSelector = ({ fixtureOptions }: FixturesSelectorProps) => {
+  const selection = useSelection()
+  const selectedFixtureOption = selection.selectionData.fixtureOption
+
   return (
     <Flex w='100%' flexDir='column' gap='md'>
       <Flex
@@ -45,8 +24,7 @@ export const FixturesSelector = ({
         gridTemplateColumns={{ base: '1fr 1fr', xl: 'unset' }}
       >
         {fixtureOptions?.map((fixtureOption) => {
-          const isSelected =
-            selectedFixtureOption.color === fixtureOption?.value
+          const isSelected = selectedFixtureOption.color === fixtureOption?.value
 
           return (
             <Flex
@@ -60,23 +38,17 @@ export const FixturesSelector = ({
               transition='.2s'
               cursor='pointer'
               onClick={() => {
-                setSelectedFixtureOption((prev) => ({
+                selection.setSelectionData((prev) => ({
                   ...prev,
-                  color: fixtureOption?.value,
+                  fixtureOption: {
+                    ...prev.fixtureOption,
+                    color: fixtureOption?.value,
+                  },
                 }))
               }}
             >
-              <Flex
-                w='16px'
-                h='16px'
-                borderRadius='50%'
-                bg={fixtureOption?.hex}
-              ></Flex>
-              <Text
-                textStyle='description'
-                color='blue.dark'
-                whiteSpace='nowrap'
-              >
+              <Flex w='16px' h='16px' borderRadius='50%' bg={fixtureOption?.hex}></Flex>
+              <Text textStyle='description' color='blue.dark' whiteSpace='nowrap'>
                 {fixtureOption?.name}
               </Text>
             </Flex>
@@ -88,13 +60,7 @@ export const FixturesSelector = ({
           ?.find((option) => option?.value === selectedFixtureOption.color)
           ?.options?.map((option) => {
             return (
-              <Flex
-                key={option?.value + 43548}
-                w='100%'
-                alignItems='center'
-                justifyContent='space-between'
-                gap='md'
-              >
+              <Flex key={option?.value + 43548} w='100%' alignItems='center' justifyContent='space-between' gap='md'>
                 <Flex alignItems='center' gap='md'>
                   <Checkbox
                     size='lg'
@@ -103,11 +69,14 @@ export const FixturesSelector = ({
                     cursor='pointer'
                     checked={selectedFixtureOption.items[option.value]}
                     onChange={() => {
-                      setSelectedFixtureOption((prev) => ({
+                      selection.setSelectionData((prev) => ({
                         ...prev,
-                        items: {
-                          ...prev.items,
-                          [option.value]: !prev.items[option.value],
+                        fixtureOption: {
+                          ...prev.fixtureOption,
+                          items: {
+                            ...prev.fixtureOption.items,
+                            [option.value]: !prev.fixtureOption.items[option.value],
+                          },
                         },
                       }))
                     }}
@@ -115,10 +84,7 @@ export const FixturesSelector = ({
                     <Text textStyle='subheader'>{option?.title}</Text>
                   </Checkbox>
                 </Flex>
-                <Image
-                  maxW={{ base: '90px', xl: '100px' }}
-                  src={option?.image}
-                />
+                <Image maxW={{ base: '90px', xl: '100px' }} src={option?.image} />
               </Flex>
             )
           })}

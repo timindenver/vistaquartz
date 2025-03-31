@@ -1,19 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 
-import type {
-  DefaultFixtureOptionValues,
-  DefaultWallColorOptionValues,
-} from 'app/root/modules/mainSelection/details'
-import type { SelectionContextProps } from 'core/context/selection'
+import type { FixtureOptionType, SelectionContextType, WallColorType } from 'core/context/selection'
 
 const MAX_PRELOAD_CHUNK_SIZE = 7
 const path = 'shared/assets/FinalRenders_progressive_50/'
-const allAssets = import.meta.glob(
-  '../../shared/assets/FinalRenders_progressive_50/**',
-  {
-    eager: true,
-  }
-)
+const allAssets = import.meta.glob('../../shared/assets/FinalRenders_progressive_50/**', {
+  eager: true,
+})
 
 export type SelectiveAssetsType = {
   alcoveShower: {
@@ -32,70 +25,42 @@ export type SelectiveAssetsType = {
 
 const selectiveAssets: SelectiveAssetsType = {
   alcoveShower: {
-    all: import.meta.glob(
-      '../../shared/assets/FinalRenders_progressive_50/alcoveShower/**',
-      {
-        eager: true,
-      }
-    ),
-    first: import.meta.glob(
-      '../../shared/assets/FinalRenders_progressive_50/alcoveShower/ALCOVE_SHOWER_BLACK/**',
-      {
-        eager: true,
-      }
-    ),
+    all: import.meta.glob('../../shared/assets/FinalRenders_progressive_50/alcoveShower/**', {
+      eager: true,
+    }),
+    first: import.meta.glob('../../shared/assets/FinalRenders_progressive_50/alcoveShower/ALCOVE_SHOWER_BLACK/**', {
+      eager: true,
+    }),
   },
   alcoveTub: {
-    all: import.meta.glob(
-      '../../shared/assets/FinalRenders_progressive_50/alcoveTub/**',
-      {
-        eager: true,
-      }
-    ),
-    first: import.meta.glob(
-      '../../shared/assets/FinalRenders_progressive_50/alcoveTub/ALCOVE_TUB_BLACK/**',
-      {
-        eager: true,
-      }
-    ),
+    all: import.meta.glob('../../shared/assets/FinalRenders_progressive_50/alcoveTub/**', {
+      eager: true,
+    }),
+    first: import.meta.glob('../../shared/assets/FinalRenders_progressive_50/alcoveTub/ALCOVE_TUB_BLACK/**', {
+      eager: true,
+    }),
   },
   californiaSystem: {
-    all: import.meta.glob(
-      '../../shared/assets/FinalRenders_progressive_50/californiaSystem/**',
-      {
-        eager: true,
-      }
-    ),
-    first: import.meta.glob(
-      '../../shared/assets/FinalRenders_progressive_50/californiaSystem/CALIFORNIA_SHOWER_BLACK/**',
-      {
-        eager: true,
-      }
-    ),
+    all: import.meta.glob('../../shared/assets/FinalRenders_progressive_50/californiaSystem/**', {
+      eager: true,
+    }),
+    first: import.meta.glob('../../shared/assets/FinalRenders_progressive_50/californiaSystem/CALIFORNIA_SHOWER_BLACK/**', {
+      eager: true,
+    }),
   },
 }
 
 type GetImageFilenameProps = {
-  selection: SelectionContextProps
-  selectedFixtureOption: {
-    color: DefaultFixtureOptionValues
-    items: {
-      handShowerWand: boolean
-      shelf: boolean
-    }
-  }
-  selectedWallColor: DefaultWallColorOptionValues
+  selection: SelectionContextType
+  selectedFixtureOption: FixtureOptionType
+  selectedWallColor: WallColorType
 }
 
-export const getImageFilename = ({
-  selection,
-  selectedFixtureOption,
-  selectedWallColor,
-}: GetImageFilenameProps) => {
+export const getImageFilename = ({ selection, selectedFixtureOption, selectedWallColor }: GetImageFilenameProps) => {
   let filename = ''
   let fixturePrefix = ''
 
-  switch (selection?.currentSelectionLayout) {
+  switch (selection?.selectionData.layout) {
     case 'showerStall': {
       filename += 'californiaSystem/'
       fixturePrefix += 'CALIFORNIA_SHOWER_'
@@ -234,10 +199,7 @@ export function useImagePreloader() {
 
   const preload = async (assets: any) => {
     const signal = abortControllerRef.current.signal
-    const toPreload =
-      assets === 'all'
-        ? (Object.values(allAssets) as string[])
-        : (Object.values(assets) as string[])
+    const toPreload = assets === 'all' ? (Object.values(allAssets) as string[]) : (Object.values(assets) as string[])
 
     for (let i = 0; i < toPreload.length; i += MAX_PRELOAD_CHUNK_SIZE) {
       if (signal.aborted) {
@@ -266,15 +228,7 @@ export function useImagePreloader() {
     setDetails((prev) => ({ ...prev, finished: true }))
   }
 
-  const selectivePreload = async ({
-    name,
-    type,
-    then,
-  }: {
-    name: keyof SelectiveAssetsType | 'all'
-    type: 'all' | 'first'
-    then: 'stop' | 'continue'
-  }) => {
+  const selectivePreload = async ({ name, type, then }: { name: keyof SelectiveAssetsType | 'all'; type: 'all' | 'first'; then: 'stop' | 'continue' }) => {
     console.log('Working on: ', name + type)
     abortControllerRef.current.abort()
 
@@ -287,12 +241,12 @@ export function useImagePreloader() {
 
     if (then === 'continue') {
       if (type === 'first') {
-        console.log('Working on: ', name + 'all')
+        // console.log('Working on: ', name + 'all')
         await preload(selectiveAssets[name]['all'])
-        console.log('Working on: ', 'all')
+        // console.log('Working on: ', 'all')
         await preload('all')
       } else {
-        console.log('Working on: ', 'all')
+        // console.log('Working on: ', 'all')
         await preload('all')
       }
     }

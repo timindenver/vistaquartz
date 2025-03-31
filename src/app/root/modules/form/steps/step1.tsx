@@ -1,16 +1,15 @@
 import { Flex, Text } from '@chakra-ui/react'
-import { type Control, Controller, type FieldErrors } from 'react-hook-form'
+import type { FormFields } from 'core/context/form'
+import { Controller, useFormContext } from 'react-hook-form'
 import 'react-phone-number-input/style.css'
 import { CustomizedInput } from 'shared/components/input'
 
-import type { FormFields } from '../'
+export const Step1 = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<FormFields>()
 
-type Step1Props = {
-  control: Control<FormFields, any>
-  errors: FieldErrors<FormFields>
-}
-
-export const Step1 = ({ control, errors }: Step1Props) => {
   return (
     <Flex w='100%' flexDir='column' gap='md'>
       <Text textStyle='subheader' color='blue.dark'>
@@ -27,13 +26,7 @@ export const Step1 = ({ control, errors }: Step1Props) => {
                 message: 'Please enter your city',
               },
             }}
-            render={({
-              field: {
-                name: controllerName,
-                value: controllerValue,
-                onChange: controllerOnChange,
-              },
-            }) => {
+            render={({ field: { name: controllerName, value: controllerValue, onChange: controllerOnChange } }) => {
               const haveError = errors?.[1]?.city
 
               return (
@@ -43,11 +36,7 @@ export const Step1 = ({ control, errors }: Step1Props) => {
                   onChange={controllerOnChange}
                   placeholder='City'
                   borderColor={haveError ? 'error' : 'transparent'}
-                  outline={
-                    haveError
-                      ? 'var(--chakra-colors-error)'
-                      : 'focus-ring-color'
-                  }
+                  outline={haveError ? 'var(--chakra-colors-error)' : 'focus-ring-color'}
                 />
               )
             }}
@@ -69,13 +58,7 @@ export const Step1 = ({ control, errors }: Step1Props) => {
                 message: 'Please enter full street address',
               },
             }}
-            render={({
-              field: {
-                name: controllerName,
-                value: controllerValue,
-                onChange: controllerOnChange,
-              },
-            }) => {
+            render={({ field: { name: controllerName, value: controllerValue, onChange: controllerOnChange } }) => {
               const haveError = errors?.[1]?.street
 
               return (
@@ -85,11 +68,7 @@ export const Step1 = ({ control, errors }: Step1Props) => {
                   onChange={controllerOnChange}
                   placeholder='Street Address'
                   borderColor={haveError ? 'error' : 'transparent'}
-                  outline={
-                    haveError
-                      ? 'var(--chakra-colors-error)'
-                      : 'focus-ring-color'
-                  }
+                  outline={haveError ? 'var(--chakra-colors-error)' : 'focus-ring-color'}
                 />
               )
             }}
@@ -111,13 +90,7 @@ export const Step1 = ({ control, errors }: Step1Props) => {
                 message: 'Please enter your state',
               },
             }}
-            render={({
-              field: {
-                name: controllerName,
-                value: controllerValue,
-                onChange: controllerOnChange,
-              },
-            }) => {
+            render={({ field: { name: controllerName, value: controllerValue, onChange: controllerOnChange } }) => {
               const haveError = errors?.[1]?.state
 
               return (
@@ -127,11 +100,7 @@ export const Step1 = ({ control, errors }: Step1Props) => {
                   onChange={controllerOnChange}
                   placeholder='State'
                   borderColor={haveError ? 'error' : 'transparent'}
-                  outline={
-                    haveError
-                      ? 'var(--chakra-colors-error)'
-                      : 'focus-ring-color'
-                  }
+                  outline={haveError ? 'var(--chakra-colors-error)' : 'focus-ring-color'}
                 />
               )
             }}
@@ -153,13 +122,7 @@ export const Step1 = ({ control, errors }: Step1Props) => {
                 message: 'Please enter your state',
               },
             }}
-            render={({
-              field: {
-                name: controllerName,
-                value: controllerValue,
-                onChange: controllerOnChange,
-              },
-            }) => {
+            render={({ field: { name: controllerName, value: controllerValue, onChange: controllerOnChange } }) => {
               const haveError = errors?.[1]?.zip
 
               return (
@@ -169,11 +132,7 @@ export const Step1 = ({ control, errors }: Step1Props) => {
                   onChange={controllerOnChange}
                   placeholder='ZIP'
                   borderColor={haveError ? 'error' : 'transparent'}
-                  outline={
-                    haveError
-                      ? 'var(--chakra-colors-error)'
-                      : 'focus-ring-color'
-                  }
+                  outline={haveError ? 'var(--chakra-colors-error)' : 'focus-ring-color'}
                 />
               )
             }}

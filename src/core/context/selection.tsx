@@ -1,44 +1,61 @@
-import {
-  type Dispatch,
-  type ReactNode,
-  type SetStateAction,
-  createContext,
-  useContext,
-  useState,
-} from 'react'
+import { type Dispatch, type ReactNode, type SetStateAction, createContext, useContext, useState } from 'react'
 
-export type SelectionContextProps = {
-  selectionDetails: {
-    [key: string]: string
+import { DefaultAdditionalOptionValues, DefaultFixtureOptionValues, DefaultWallColorOptionValues, defaultFixtureOptions, defaultWallColorOptions } from 'app/root/modules/mainSelection/details'
+
+export type FixtureOptionType = {
+  color: DefaultFixtureOptionValues
+  items: {
+    handShowerWand: boolean
+    shelf: boolean
   }
-  setSelectionDetails: Dispatch<
+}
+
+export type WallColorType = DefaultWallColorOptionValues
+
+export type SelectionContextType = {
+  selectionData: {
+    handling: 'left' | 'right' | null
+    layout: 'showerStall' | 'alcoveShower' | 'tubShowerCombo' | null
+    fixtureOption: FixtureOptionType
+    wallColor: WallColorType
+    additionalItems: DefaultAdditionalOptionValues[]
+  }
+  setSelectionData: Dispatch<
     SetStateAction<{
-      [key: string]: string
+      handling: 'left' | 'right' | null
+      layout: 'showerStall' | 'alcoveShower' | 'tubShowerCombo' | null
+      fixtureOption: FixtureOptionType
+      wallColor: WallColorType
+      additionalItems: DefaultAdditionalOptionValues[]
     }>
   >
-  currentSelectionLayout: 'showerStall' | 'alcoveShower' | 'tubShowerCombo'
-  currentSelectionHandling: 'left' | 'right'
-} | null
+}
 
-const SelectionContext = createContext<SelectionContextProps>(null)
+const SelectionContext = createContext<SelectionContextType | null>(null)
 
 export const SelectionProvider = ({ children }: { children: ReactNode }) => {
-  const [selectionDetails, setSelectionDetails] = useState<{
-    [key: string]: string
-  }>({})
+  const [selectionData, setSelectionData] = useState<SelectionContextType['selectionData']>({
+    handling: null,
+    layout: null,
+    fixtureOption: {
+      color: defaultFixtureOptions[0]['value'],
+      items: {
+        handShowerWand: false,
+        shelf: false,
+      },
+    },
+    wallColor: defaultWallColorOptions[0]['value'],
+    additionalItems: [],
+  })
 
   const value = {
-    selectionDetails,
-    setSelectionDetails,
-    currentSelectionLayout: selectionDetails?.['layout'],
-    currentSelectionHandling: selectionDetails?.['handling'],
+    selectionData,
+    setSelectionData,
   }
 
   return (
     // @ts-ignore
-    <SelectionContext.Provider value={value}>
-      {children}
-    </SelectionContext.Provider>
+    <SelectionContext.Provider value={value}>{children}</SelectionContext.Provider>
   )
 }
 

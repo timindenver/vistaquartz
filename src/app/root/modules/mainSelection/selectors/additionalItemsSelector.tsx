@@ -1,66 +1,39 @@
-import type { Dispatch, SetStateAction } from 'react'
-
 import { Flex, Image } from '@chakra-ui/react'
 import { Checkbox } from 'components/ui/checkbox'
+import { useSelection } from 'core/context/selection'
 
-import type {
-  DefaultAdditionalOptionValues,
-  DefaultAdditionalOptions,
-} from '../details'
+import type { DefaultAdditionalOptions } from '../details'
 import css from '../styles.module.scss'
 
 type AdditionalItemsSelectorProps = {
   additionalOptions: DefaultAdditionalOptions
-  selectedAdditionalItems: {
-    open: boolean
-    items: DefaultAdditionalOptionValues[]
-  }
-  setSelectedAdditionalItems: Dispatch<
-    SetStateAction<{
-      open: boolean
-      items: DefaultAdditionalOptionValues[]
-    }>
-  >
   isMobile: boolean | undefined
 }
 
-export const AdditionalItemsSelector = ({
-  additionalOptions,
-  selectedAdditionalItems,
-  setSelectedAdditionalItems,
-  isMobile,
-}: AdditionalItemsSelectorProps) => {
+export const AdditionalItemsSelector = ({ additionalOptions, isMobile }: AdditionalItemsSelectorProps) => {
+  const selection = useSelection()
+  const selectedAdditionalItems = selection.selectionData.additionalItems
+
   return (
     <Flex flexDir='column' gap={{ base: 'unset', xl: 'md' }}>
       {additionalOptions?.map((option) => {
         return (
-          <Flex
-            key={option?.value + 79875}
-            w='100%'
-            alignItems='center'
-            justifyContent='space-between'
-            gap='md'
-            py={{ base: 'md', xl: 'unset' }}
-          >
+          <Flex key={option?.value + 79875} w='100%' alignItems='center' justifyContent='space-between' gap='md' py={{ base: 'md', xl: 'unset' }}>
             <Flex alignItems='center' gap='md'>
               <Checkbox
                 size='lg'
                 color='blue.dark'
                 className={css.checkbox}
-                checked={selectedAdditionalItems?.items?.includes(
-                  option?.value
-                )}
+                checked={selectedAdditionalItems?.includes(option?.value)}
+                cursor='pointer'
                 onChange={() => {
-                  const newItems = selectedAdditionalItems.items?.includes(
-                    option?.value
-                  )
-                    ? selectedAdditionalItems.items.filter(
-                        (item) => item !== option?.value
-                      )
-                    : [...(selectedAdditionalItems.items || []), option?.value]
-                  setSelectedAdditionalItems((prev) => ({
+                  const newItems = selectedAdditionalItems?.includes(option?.value)
+                    ? selectedAdditionalItems.filter((item) => item !== option?.value)
+                    : [...(selectedAdditionalItems || []), option?.value]
+
+                  selection.setSelectionData((prev) => ({
                     ...prev,
-                    items: newItems,
+                    additionalItems: newItems,
                   }))
                 }}
               >
