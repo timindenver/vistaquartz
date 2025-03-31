@@ -48,7 +48,7 @@ export const FixturesSelector = ({ fixtureOptions }: FixturesSelectorProps) => {
               }}
             >
               <Flex w='16px' h='16px' borderRadius='50%' bg={fixtureOption?.hex}></Flex>
-              <Text textStyle='description' color='blue.dark' whiteSpace='nowrap'>
+              <Text textStyle='description' color='blue.dark' whiteSpace='nowrap' pos='relative' bottom='2px'>
                 {fixtureOption?.name}
               </Text>
             </Flex>
