@@ -4,8 +4,10 @@ import { Button, Flex, Separator, Text, useBreakpointValue } from '@chakra-ui/re
 import { recipes } from 'components/ui/theme/recipes'
 import { Tooltip } from 'components/ui/tooltip'
 import { useSelection } from 'core/context/selection'
+import { useSelectionPreloader } from 'core/context/selectionPreloader'
 import { getImageFilename, useFinalRenders } from 'core/hooks/image'
 import { saveAs } from 'file-saver'
+import { Jimp } from 'jimp'
 import InnerImageZoom from 'react-inner-image-zoom'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css'
 import ArrowDown from 'shared/assets/icons/arrowDown'
@@ -16,7 +18,7 @@ import DrawIcon from 'shared/assets/icons/draw'
 import ShowerIcon from 'shared/assets/icons/shower'
 import ZoomIcon from 'shared/assets/icons/zoom'
 
-import { type DefaultAdditionalOptionValues, MAIN_LAYOUT_DETAILS } from './details'
+import { MAIN_LAYOUT_DETAILS } from './details'
 import { AdditionalItemsSelector } from './selectors/additionalItemsSelector'
 import { FixturesSelector } from './selectors/fixturesSelector'
 import { WallColorSelector } from './selectors/wallColorSelector'
@@ -27,6 +29,7 @@ type MainSelectionProps = {
 
 export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
   const selection = useSelection()
+  const selectionPreloader = useSelectionPreloader()
 
   const { wallColorOptions, fixtureOptions, additionalOptions } = MAIN_LAYOUT_DETAILS?.[selection?.selectionData?.layout || 'showerStall']
 
@@ -35,6 +38,7 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
   const [openTab, setOpenTab] = useState<'wallColor' | 'finish' | 'additional'>('wallColor')
 
   const { image: activeImageURL, name: activeImageName } = useFinalRenders({
+    selectionPreloader,
     fileName: getImageFilename({
       selection,
       selectedFixtureOption: selection?.selectionData?.fixtureOption,
@@ -59,7 +63,9 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
       alignItems='center'
     >
       <Flex w='calc(100% - 32px)' maxW={{ base: '343px', xl: '592px' }} pos='relative'>
-        <InnerImageZoom src={activeImageURL} zoomScale={1} hideCloseButton hideHint />
+        <Flex transform={selection?.selectionData?.handling === 'left' ? 'none' : 'scaleX(-1)'}>
+          <InnerImageZoom src={activeImageURL} zoomScale={1} hideCloseButton hideHint />
+        </Flex>
         <Flex
           w='44px'
           h='44px'
@@ -201,8 +207,16 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
             justifyContent='center'
             textAlign='center'
             gap='10px'
-            onClick={() => {
-              saveAs(activeImageURL, activeImageName)
+            onClick={async () => {
+              if (selection?.selectionData?.handling === 'left') {
+                saveAs(activeImageURL, activeImageName)
+              } else {
+                const img = await Jimp.read(activeImageURL)
+                img.flip({ horizontal: true })
+                // @ts-ignore
+                const base64 = await img.getBase64(img?.mime)
+                saveAs(base64, activeImageName)
+              }
             }}
           >
             <DownloadIcon width='15px' height='15px' color='white' />

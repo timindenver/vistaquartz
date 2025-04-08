@@ -2,7 +2,6 @@ import { type Dispatch, type SetStateAction, useState } from 'react'
 
 import { Flex, Image, Text } from '@chakra-ui/react'
 import { useSelection } from 'core/context/selection'
-import { type SelectiveAssetsType, useImagePreloader } from 'core/hooks/image'
 import ArrowLeftIcon from 'shared/assets/icons/arrowLeft'
 
 import { LAYOUT_DETAILS, type LAYOUT_DETAIL_TYPE } from './details'
@@ -13,8 +12,6 @@ type LayoutSelectionProps = {
 
 export const LayoutSelection = ({ setActiveStep }: LayoutSelectionProps) => {
   const selection = useSelection()
-  const imagePreloader = useImagePreloader()
-
   const [activeSelection, setActiveSelection] = useState(0)
 
   const handleGoBack = () => {
@@ -34,28 +31,6 @@ export const LayoutSelection = ({ setActiveStep }: LayoutSelectionProps) => {
     if (activeSelection === 1) {
       setActiveStep((prev) => prev + 1)
     }
-
-    let preloadType: keyof SelectiveAssetsType | 'all' = 'all'
-    switch (activeOption?.value) {
-      case 'showerStall': {
-        preloadType = 'californiaSystem'
-        break
-      }
-      case 'alcoveShower': {
-        preloadType = 'alcoveShower'
-        break
-      }
-      case 'tubShowerCombo': {
-        preloadType = 'alcoveTub'
-        break
-      }
-    }
-
-    imagePreloader.selectivePreload({
-      name: preloadType,
-      type: 'first',
-      then: 'continue',
-    })
   }
 
   return (
