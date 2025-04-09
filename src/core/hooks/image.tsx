@@ -211,7 +211,7 @@ const beautifyFilename = (input: string) => {
   return result
 }
 
-export const useFinalRenders = ({ fileName, selectionPreloader }: { fileName: string; selectionPreloader: SelectionPreloaderContextType }) => {
+export const useFinalRenders = ({ fileName, selectionPreloader, flipImage }: { fileName: string; selectionPreloader: SelectionPreloaderContextType; flipImage: boolean }) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [image, setImage] = useState<string>('')
@@ -228,7 +228,8 @@ export const useFinalRenders = ({ fileName, selectionPreloader }: { fileName: st
 
       try {
         // @ts-ignore
-        setImage(preloadedImage || allAssets['../../' + path + fileName]?.default)
+        const img = preloadedImage || allAssets['../../' + path + fileName]?.default
+        setImage(img)
         setName(beautifyFilename(fileName))
       } catch (err) {
         console.warn(err)

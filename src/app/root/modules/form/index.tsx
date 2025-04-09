@@ -69,7 +69,7 @@ export const Form = ({ setActiveStep }: FormProps) => {
       await handleSubmitRequest()
     }
 
-    // setActiveFormStep((prev) => prev + 1)
+    setActiveFormStep((prev) => prev + 1)
   }
 
   const handleSubmitRequest = async () => {

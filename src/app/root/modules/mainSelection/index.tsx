@@ -8,7 +8,6 @@ import { useSelectionPreloader } from 'core/context/selectionPreloader'
 import { getImageFilename, useFinalRenders } from 'core/hooks/image'
 import { saveAs } from 'file-saver'
 import { Jimp } from 'jimp'
-import InnerImageZoom from 'react-inner-image-zoom'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css'
 import ArrowDown from 'shared/assets/icons/arrowDown'
 import ChatInfoIcon from 'shared/assets/icons/chatInfo'
@@ -17,11 +16,13 @@ import DownloadIcon from 'shared/assets/icons/download'
 import DrawIcon from 'shared/assets/icons/draw'
 import ShowerIcon from 'shared/assets/icons/shower'
 import ZoomIcon from 'shared/assets/icons/zoom'
+import InnerImageZoom from 'shared/components/zoomReact/src/index'
 
 import { MAIN_LAYOUT_DETAILS } from './details'
 import { AdditionalItemsSelector } from './selectors/additionalItemsSelector'
 import { FixturesSelector } from './selectors/fixturesSelector'
 import { WallColorSelector } from './selectors/wallColorSelector'
+import css from './styles.module.scss'
 
 type MainSelectionProps = {
   setActiveStep: Dispatch<SetStateAction<number>>
@@ -44,6 +45,7 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
       selectedFixtureOption: selection?.selectionData?.fixtureOption,
       selectedWallColor: selection?.selectionData?.wallColor,
     }),
+    flipImage: selection?.selectionData?.handling === 'left' ? false : true,
   })
 
   const isMobile = useBreakpointValue({ base: true, xl: false })
@@ -63,9 +65,7 @@ export const MainSelection = ({ setActiveStep }: MainSelectionProps) => {
       alignItems='center'
     >
       <Flex w='calc(100% - 32px)' maxW={{ base: '343px', xl: '592px' }} pos='relative'>
-        <Flex transform={selection?.selectionData?.handling === 'left' ? 'none' : 'scaleX(-1)'}>
-          <InnerImageZoom src={activeImageURL} zoomScale={1} hideCloseButton hideHint />
-        </Flex>
+        <InnerImageZoom src={activeImageURL} zoomScale={1} horizontalFlip={selection?.selectionData?.handling === 'left' ? false : true} hideCloseButton hideHint />
         <Flex
           w='44px'
           h='44px'
