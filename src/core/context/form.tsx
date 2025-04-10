@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { FormProvider, type UseFormReturn, useForm } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 import type { ImageListType } from 'react-images-uploading'
 
 export type FormFields = [
@@ -8,6 +8,8 @@ export type FormFields = [
     firstName: string
     lastName: string
     phone: string
+    email: string
+    emailVerified: boolean
   },
   {
     city: string
@@ -33,6 +35,8 @@ export const SubmitFormProvider = ({ children }: { children: ReactNode }) => {
         firstName: '',
         lastName: '',
         phone: '',
+        email: '',
+        emailVerified: false,
       },
       {
         city: '',

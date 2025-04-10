@@ -4,7 +4,6 @@ import { Button, Flex, Text, useBreakpointValue } from '@chakra-ui/react'
 import { submitData } from 'core/api/submit'
 import type { FormFields } from 'core/context/form'
 import { useSelection } from 'core/context/selection'
-import rn from 'random-number'
 import { useFormContext } from 'react-hook-form'
 import type { ImageListType } from 'react-images-uploading'
 import ArrowLeftIcon from 'shared/assets/icons/arrowLeft'
@@ -42,9 +41,9 @@ export const Form = ({ setActiveStep }: FormProps) => {
   const selection = useSelection()
   const isMobile = useBreakpointValue({ base: true, xl: false })
 
-  const verificationCode = useRef(rn({ min: 10000, max: 99999, integer: true }))
   const [activeFormStep, setActiveFormStep] = useState(0)
   const [uploadedImages, setUploadedImages] = useState<ImageListType>([])
+  const [emailVerified, setEmailVerified] = useState(false)
 
   const {
     getValues,
@@ -179,7 +178,7 @@ export const Form = ({ setActiveStep }: FormProps) => {
           }}
         >
           <Flex w='100%' h='100%' alignItems='center'>
-            {activeFormStep === 0 && <Step0 />}
+            {activeFormStep === 0 && <Step0 emailVerified={emailVerified} setEmailVerified={setEmailVerified} />}
             {activeFormStep === 1 && <Step1 />}
             {activeFormStep === 2 && <Step2 />}
             {activeFormStep === 3 && <Step3 uploadedImages={uploadedImages} setUploadedImages={setUploadedImages} isMobile={isMobile} />}
