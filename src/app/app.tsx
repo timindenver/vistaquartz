@@ -1,6 +1,7 @@
 import { lazy } from 'react'
 
 import { SelectionProvider } from 'core/context/selection'
+import { SenderProvider } from 'core/context/sender'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import NotFound from './notFound'
@@ -11,10 +12,12 @@ export default function App() {
   return (
     <BrowserRouter>
       <SelectionProvider>
-        <Routes>
-          <Route path='/' element={<Root />} />
-          <Route path='*' element={<NotFound />} />
-        </Routes>
+        <SenderProvider>
+          <Routes>
+            <Route path='/' element={<Root />} />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </SenderProvider>
       </SelectionProvider>
     </BrowserRouter>
   )

@@ -9,25 +9,9 @@ export default function NotFound() {
   }
 
   return (
-    <Flex
-      w='100%'
-      h='100%'
-      my='auto'
-      justifyContent='center'
-      alignItems='center'
-      fontSize={{ base: '3xl', xl: '4xl' }}
-      direction='column'
-      gap={4}
-    >
+    <Flex w='100%' h='100%' my='auto' justifyContent='center' alignItems='center' fontSize={{ base: '3xl', xl: '4xl' }} direction='column' gap={4}>
       <Text>404 | Page Not Found</Text>
-      <Button
-        cursor='pointer'
-        color={'var(--chakra-colors-text-white)'}
-        onClick={handleGoBack}
-        py={3}
-        px={45}
-        backgroundColor='var(--chakra-colors-primary-accent)'
-      >
+      <Button cursor='pointer' color={'var(--chakra-colors-text-white)'} onClick={handleGoBack} py={3} px={45} backgroundColor='var(--chakra-colors-primary-accent)'>
         Go Back
       </Button>
     </Flex>

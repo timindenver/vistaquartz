@@ -6,10 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "format": "prettier --config ./.prettierrc --write \"./**/*.{js,jsx,ts,tsx}\"",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typegen": "npx @chakra-ui/cli typegen ./src/components/ui/provider.tsx"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.2.4",

@@ -13,6 +13,16 @@ export const recipes = {
           textStyle: 'button',
           borderRadius: '0px',
         },
+        selected: {
+          w: 'fit-content',
+          h: '50px',
+          bg: 'white',
+          color: 'blue.dark',
+          border: '2px solid var(--chakra-colors-blue-dark)',
+          textAlign: 'center',
+          textStyle: 'button',
+          borderRadius: '0px',
+        },
       },
     },
     defaultVariants: {

@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction, useRef, useState } from 'react'
+import { type Dispatch, type SetStateAction, useState } from 'react'
 
 import { Button, Flex, Text, useBreakpointValue } from '@chakra-ui/react'
 import { submitData } from 'core/api/submit'
@@ -43,16 +43,15 @@ export const Form = ({ setActiveStep }: FormProps) => {
 
   const [activeFormStep, setActiveFormStep] = useState(0)
   const [uploadedImages, setUploadedImages] = useState<ImageListType>([])
-  const [emailVerified, setEmailVerified] = useState(false)
 
   const {
     getValues,
     trigger,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useFormContext<FormFields>()
 
   window.onbeforeunload = async () => {
-    if (!isValid || activeFormStep !== 4) {
+    if (!isValid || activeFormStep !== 5) {
       await handleSubmitRequest()
     }
   }
@@ -64,7 +63,7 @@ export const Form = ({ setActiveStep }: FormProps) => {
       return
     }
 
-    if (activeFormStep === 3) {
+    if (activeFormStep === 4) {
       await handleSubmitRequest()
     }
 
@@ -88,14 +87,11 @@ export const Form = ({ setActiveStep }: FormProps) => {
         plumbingFixturesColor: selection?.selectionData?.fixtureOption?.color,
         plumbingFixturesItems: plumbingFixturesItems?.length > 0 ? JSON.stringify(plumbingFixturesItems) : null,
         additionalItems: additionalItems?.length > 0 ? JSON.stringify(additionalItems) : null,
-        name: formData?.[0]?.firstName,
-        lastName: formData?.[0]?.lastName,
-        phone: formData?.[0]?.phone,
         city: formData?.[1]?.city,
         street: formData?.[1]?.street,
         state: formData?.[1]?.state,
         zip: formData?.[1]?.zip,
-        receivingMethod: formData?.[2]?.estimateReceiveMethod,
+        textingPermission: formData?.[2]?.textingPermission,
         propertyOwner: formData?.[2]?.confirmation,
         images: uploadedImages?.length > 0 ? uploadedImages : null,
       },
@@ -113,12 +109,12 @@ export const Form = ({ setActiveStep }: FormProps) => {
               gap='10px'
               cursor='pointer'
               onClick={() => {
-                setActiveStep(1)
+                activeFormStep > 0 && setActiveFormStep((prev) => prev - 1)
               }}
             >
               <ArrowLeftIcon width='12.16px' height='20.38px' color='var(--chakra-colors-blue-dark)' />
               <Text textStyle='smallText' color='blue.dark'>
-                Configurator
+                Back
               </Text>
             </Flex>
           )}
@@ -160,13 +156,29 @@ export const Form = ({ setActiveStep }: FormProps) => {
               })}
             </Flex>
           </Flex>
-          {!isMobile && <Flex flex={1}></Flex>}
+
+          {!isMobile && (
+            <Flex
+              flex={1}
+              alignItems='center'
+              justifyContent='flex-end'
+              gap='10px'
+              cursor='pointer'
+              onClick={() => {
+                setActiveStep(1)
+              }}
+            >
+              <Text textStyle='smallText' color='blue.dark'>
+                Configurator
+              </Text>
+            </Flex>
+          )}
         </Flex>
       )}
 
       <Flex w='100%' maxW='520px' h='100%' flexDir='column' justifyContent='space-between' mx='auto' mt='32px' px={{ base: 'md', xl: 'unset' }}>
         {activeFormStep === 0 && (
-          <Text textStyle='header' color='blue.dark' textAlign='center'>
+          <Text textStyle='header' color='blue.dark' textAlign='center' mb='6'>
             We have the specs needed to prepare your estimate
           </Text>
         )}
@@ -178,11 +190,11 @@ export const Form = ({ setActiveStep }: FormProps) => {
           }}
         >
           <Flex w='100%' h='100%' alignItems='center'>
-            {activeFormStep === 0 && <Step0 emailVerified={emailVerified} setEmailVerified={setEmailVerified} />}
+            {activeFormStep === 0 && <Step0 />}
             {activeFormStep === 1 && <Step1 />}
             {activeFormStep === 2 && <Step2 />}
             {activeFormStep === 3 && <Step3 uploadedImages={uploadedImages} setUploadedImages={setUploadedImages} isMobile={isMobile} />}
-            {activeFormStep === 4 && <Step4 setActiveStep={setActiveStep} receivingMethod={getValues()?.[2]?.estimateReceiveMethod} isMobile={isMobile} />}
+            {activeFormStep === 4 && <Step4 setActiveStep={setActiveStep} isMobile={isMobile} />}
           </Flex>
         </form>
         {activeFormStep < 4 && (

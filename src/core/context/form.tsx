@@ -5,11 +5,10 @@ import type { ImageListType } from 'react-images-uploading'
 
 export type FormFields = [
   {
-    firstName: string
-    lastName: string
-    phone: string
-    email: string
-    emailVerified: boolean
+    formSubmitted: {
+      text: string
+      phone: string
+    }
   },
   {
     city: string
@@ -19,6 +18,7 @@ export type FormFields = [
   },
   {
     estimateReceiveMethod: 'text' | 'email' | ''
+    textingPermission: 'yes' | 'no' | ''
     confirmation: 'owner' | 'non-owner' | ''
   },
   {
@@ -32,11 +32,10 @@ export const SubmitFormProvider = ({ children }: { children: ReactNode }) => {
     reValidateMode: 'onChange',
     defaultValues: [
       {
-        firstName: '',
-        lastName: '',
-        phone: '',
-        email: '',
-        emailVerified: false,
+        formSubmitted: {
+          text: '',
+          phone: '',
+        },
       },
       {
         city: '',
@@ -45,7 +44,7 @@ export const SubmitFormProvider = ({ children }: { children: ReactNode }) => {
         zip: '',
       },
       {
-        estimateReceiveMethod: '',
+        textingPermission: '',
         confirmation: '',
       },
       {

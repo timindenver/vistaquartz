@@ -10,14 +10,11 @@ type SubmitDataProps = {
     plumbingFixturesColor: string | null
     plumbingFixturesItems: string | null
     additionalItems: string | null
-    name: string | null
-    lastName: string | null
-    phone: string | null
     city: string | null
     street: string | null
     state: string | null
     zip: string | null
-    receivingMethod: string | null
+    textingPermission: string | null
     propertyOwner: string | null
     images: ImageListType | null
   }

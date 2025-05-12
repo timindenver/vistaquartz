@@ -8,6 +8,7 @@ import './styles.scss'
 export const Step2 = () => {
   const {
     control,
+    getValues,
     formState: { errors },
   } = useFormContext<FormFields>()
 
@@ -73,6 +74,64 @@ export const Step2 = () => {
 
       <Flex flexDir='column' gap='20px'>
         <Text textStyle='subheader' color='blue.dark'>
+          Can we text you {getValues('0.formSubmitted.phone') ? `at ${getValues('0.formSubmitted.phone')}` : ''} if we have additional questions while processsing your estimate?
+        </Text>
+        <Flex flexDir='column' gap='5px'>
+          <Controller
+            control={control}
+            name='2.textingPermission'
+            rules={{
+              required: {
+                value: true,
+                message: 'Please select',
+              },
+            }}
+            render={({ field: { name: controllerName, value: controllerValue, onChange: controllerOnChange } }) => {
+              return (
+                <Grid gridTemplateColumns='repeat(2, 1fr)'>
+                  <CustomizedCheckbox
+                    root={{
+                      name: controllerName,
+                      checked: controllerValue === 'yes',
+                      onCheckedChange: (event) => {
+                        event.checked && controllerOnChange('yes')
+                      },
+                      w: 'fit-content',
+                      size: 'lg',
+                      cursor: 'pointer',
+                    }}
+                    label={{ value: 'Yes' }}
+                    custom={{ shape: 'Square' }}
+                  />
+
+                  <CustomizedCheckbox
+                    root={{
+                      name: controllerName,
+                      checked: controllerValue === 'no',
+                      onCheckedChange: (event) => {
+                        event.checked && controllerOnChange('no')
+                      },
+                      w: 'fit-content',
+                      size: 'lg',
+                      cursor: 'pointer',
+                    }}
+                    label={{ value: 'No' }}
+                    custom={{ shape: 'Square' }}
+                  />
+                </Grid>
+              )
+            }}
+          />
+          {errors?.[2]?.textingPermission && (
+            <Text fontSize='13px' color='error'>
+              {errors?.[2]?.textingPermission?.message}
+            </Text>
+          )}
+        </Flex>
+      </Flex>
+
+      <Flex flexDir='column' gap='20px'>
+        <Text textStyle='subheader' color='blue.dark'>
           Please confirm you are the property owner
         </Text>
         <Flex flexDir='column' gap='5px'>
@@ -82,7 +141,8 @@ export const Step2 = () => {
             rules={{
               required: {
                 value: true,
-                message: 'Please confirm that you are the owner',
+                message:
+                  'Please confirm that you are the property OWNER. (Due to privacy laws we are only allowed to provide estimates for property improvement to a person on the title of the property)',
               },
             }}
             render={({ field: { name: controllerName, value: controllerValue, onChange: controllerOnChange } }) => {

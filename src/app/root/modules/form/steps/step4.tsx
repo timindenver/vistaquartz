@@ -4,22 +4,19 @@ import { Button, Flex, Text } from '@chakra-ui/react'
 
 type Step4Props = {
   setActiveStep: Dispatch<SetStateAction<number>>
-  receivingMethod: '' | 'text' | 'email'
   isMobile: boolean | undefined
 }
 
-export const Step4 = ({ setActiveStep, receivingMethod, isMobile }: Step4Props) => {
-  const methodName = receivingMethod === 'email' ? 'email' : receivingMethod === 'text' ? 'text message' : ''
-
+export const Step4 = ({ setActiveStep, isMobile }: Step4Props) => {
   return (
     <Flex h={{ base: '100%', xl: 'fit-content' }} flexDir='column' gap='40px'>
       {isMobile && <Flex flex='1'></Flex>}
       <Flex flex='1' flexDir='column' justifyContent='center' gap='md'>
         <Text textStyle='header' color='blue.dark' textAlign='center'>
-          Thank you! You will receive your estimate via {methodName} within 48 hours
+          Thank You! We are working on your estimate and you will receive it by email within 48 hours.
         </Text>
         <Text textStyle='subheader' color='blue.dark' textAlign='center'>
-          We may reach out with additional questions or clarifications
+          We may reach out with additional questions or clarifications - Vista Quartz Team
         </Text>
       </Flex>
       <Flex w='100%' flex='1' flexDir={{ base: 'column', xl: 'row' }} justifyContent={{ base: 'flex-end', xl: 'unset' }} gap='sm'>
@@ -30,7 +27,7 @@ export const Step4 = ({ setActiveStep, receivingMethod, isMobile }: Step4Props) 
             setActiveStep(1)
           }}
         >
-          Back to Configurator
+          BACK TO DESIGN TOOL
         </Button>
         <Button
           w={{ base: '100%', xl: 'unset' }}
