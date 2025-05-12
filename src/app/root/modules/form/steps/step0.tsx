@@ -62,7 +62,11 @@ export const Step0 = () => {
               },
             }}
             render={() => {
-              return sender.RenderContactInfoForm
+              return (
+                <Flex maxH='700px' overflowY='hidden'>
+                  {sender.RenderContactInfoForm}
+                </Flex>
+              )
             }}
           />
 
