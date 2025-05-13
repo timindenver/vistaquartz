@@ -47,14 +47,16 @@ export const Form = ({ setActiveStep }: FormProps) => {
   const {
     getValues,
     trigger,
-    formState: { isValid, errors },
+    formState: { isValid },
   } = useFormContext<FormFields>()
 
-  window.onbeforeunload = async () => {
-    if (!isValid || activeFormStep !== 5) {
+  const handleBeforeUnload = async () => {
+    if (!isValid || activeFormStep !== 4) {
       await handleSubmitRequest()
     }
   }
+
+  window.addEventListener('beforeunload', handleBeforeUnload)
 
   const handleGoNextStep = async () => {
     trigger()
@@ -63,7 +65,7 @@ export const Form = ({ setActiveStep }: FormProps) => {
       return
     }
 
-    if (activeFormStep === 4) {
+    if (activeFormStep === 3) {
       await handleSubmitRequest()
     }
 
@@ -83,7 +85,7 @@ export const Form = ({ setActiveStep }: FormProps) => {
       body: {
         layout: selection?.selectionData?.layout || '',
         handling: selection?.selectionData?.handling || '',
-        wallcolor: selection?.selectionData?.wallColor,
+        wallColor: selection?.selectionData?.wallColor,
         plumbingFixturesColor: selection?.selectionData?.fixtureOption?.color,
         plumbingFixturesItems: plumbingFixturesItems?.length > 0 ? JSON.stringify(plumbingFixturesItems) : null,
         additionalItems: additionalItems?.length > 0 ? JSON.stringify(additionalItems) : null,
@@ -91,11 +93,14 @@ export const Form = ({ setActiveStep }: FormProps) => {
         street: formData?.[1]?.street,
         state: formData?.[1]?.state,
         zip: formData?.[1]?.zip,
+        estimateReceiveMethod: formData?.[2]?.estimateReceiveMethod,
         textingPermission: formData?.[2]?.textingPermission,
         propertyOwner: formData?.[2]?.confirmation,
         images: uploadedImages?.length > 0 ? uploadedImages : null,
       },
     })
+
+    window.removeEventListener('beforeunload', handleBeforeUnload)
   }
 
   return (
@@ -112,10 +117,14 @@ export const Form = ({ setActiveStep }: FormProps) => {
                 activeFormStep > 0 && setActiveFormStep((prev) => prev - 1)
               }}
             >
-              <ArrowLeftIcon width='12.16px' height='20.38px' color='var(--chakra-colors-blue-dark)' />
-              <Text textStyle='smallText' color='blue.dark'>
-                Back
-              </Text>
+              {activeFormStep !== 0 && (
+                <>
+                  <ArrowLeftIcon width='12.16px' height='20.38px' color='var(--chakra-colors-blue-dark)' />
+                  <Text textStyle='smallText' color='blue.dark'>
+                    Back
+                  </Text>
+                </>
+              )}
             </Flex>
           )}
 

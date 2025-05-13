@@ -29,15 +29,22 @@ export const Step0 = () => {
 
           if (form) {
             form.addEventListener('submit', (event) => {
-              const email = event.target.elements.email.value
-              const phone = event.target.elements.phone.value
+              const formData = Object.fromEntries(new FormData(event.target).entries())
+              const email = formData.email
+              const phone = formData.phone
 
-              clearErrors('0.formSubmitted')
-              setValue('0.formSubmitted', {
-                email,
-                phone,
-              })
-              trigger()
+              const interval = setInterval(() => {
+                const isSuccessfullySubmitted = window.getComputedStyle(iframeDoc.querySelector('.sender-form-success')).display !== 'none'
+                if (isSuccessfullySubmitted) {
+                  clearErrors('0.formSubmitted')
+                  setValue('0.formSubmitted', {
+                    email,
+                    phone,
+                  })
+                  trigger()
+                  clearInterval(interval)
+                }
+              }, 100)
             })
           }
         },

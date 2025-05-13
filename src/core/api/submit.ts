@@ -6,7 +6,7 @@ type SubmitDataProps = {
   body: {
     layout: string | null
     handling: string | null
-    wallcolor: string | null
+    wallColor: string | null
     plumbingFixturesColor: string | null
     plumbingFixturesItems: string | null
     additionalItems: string | null
@@ -14,6 +14,7 @@ type SubmitDataProps = {
     street: string | null
     state: string | null
     zip: string | null
+    estimateReceiveMethod: string | null
     textingPermission: string | null
     propertyOwner: string | null
     images: ImageListType | null
