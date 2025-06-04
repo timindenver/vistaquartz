@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import NotFound from './notFound'
 
-const Root = lazy(() => import('./root/index'))
+const Constructor = lazy(() => import('./constructor/index'))
 
 export default function App() {
   return (
@@ -14,7 +14,8 @@ export default function App() {
       <SelectionProvider>
         <SenderProvider>
           <Routes>
-            <Route path='/' element={<Root />} />
+            <Route path='/' element={<>Root</>} />
+            <Route path='/constructor' element={<Constructor />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </SenderProvider>

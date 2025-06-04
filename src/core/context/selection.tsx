@@ -1,6 +1,6 @@
 import { type Dispatch, type ReactNode, type SetStateAction, createContext, useContext, useState } from 'react'
 
-import { DefaultAdditionalOptionValues, DefaultFixtureOptionValues, DefaultWallColorOptionValues, defaultFixtureOptions, defaultWallColorOptions } from 'app/root/modules/mainSelection/details'
+import { DefaultAdditionalOptionValues, DefaultFixtureOptionValues, DefaultWallColorOptionValues, defaultFixtureOptions, defaultWallColorOptions } from 'app/constructor/modules/mainSelection/details'
 
 export type FixtureOptionType = {
   color: DefaultFixtureOptionValues
