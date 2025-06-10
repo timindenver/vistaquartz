@@ -13,10 +13,10 @@ export const Step4 = ({ setActiveStep, isMobile }: Step4Props) => {
       {isMobile && <Flex flex='1'></Flex>}
       <Flex flex='1' flexDir='column' justifyContent='center' gap='md'>
         <Text textStyle='header' color='blue.dark' textAlign='center'>
-          Thank You! We are working on your estimate and you will receive it by email within 48 hours.
+          Thank You! You will receive your estimate within 48 hours.
         </Text>
         <Text textStyle='subheader' color='blue.dark' textAlign='center'>
-          We may reach out with additional questions or clarifications - Vista Quartz Team
+          If you have any questions in the meantime please text us at 720-807-3626 We may reach out with additional questions or clarifications - Vista Quartz Team
         </Text>
       </Flex>
       <Flex w='100%' flex='1' flexDir={{ base: 'column', xl: 'row' }} justifyContent={{ base: 'flex-end', xl: 'unset' }} gap='sm'>

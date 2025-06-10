@@ -210,6 +210,7 @@ export const Form = ({ setActiveStep }: FormProps) => {
           <Button
             w='100%'
             mt='20px'
+            disabled={!isValid && activeFormStep === 0}
             onClick={() => {
               handleGoNextStep()
             }}

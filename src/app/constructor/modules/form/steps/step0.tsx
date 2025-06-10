@@ -15,7 +15,7 @@ export const Step0 = () => {
     trigger,
     setValue,
     clearErrors,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useFormContext<FormFields>()
 
   useEffect(() => {
@@ -55,9 +55,11 @@ export const Step0 = () => {
   return (
     <Flex w='100%' flexDir='column' gap='8'>
       <Flex w='100%' flexDir='column' gap='md'>
-        <Text textStyle='subheader' color='blue.dark' textAlign='center'>
-          Contact info
-        </Text>
+        {!isValid && (
+          <Text textStyle='subheader' color='blue.dark' textAlign='center'>
+            Contact info
+          </Text>
+        )}
         <Flex flexDir='column' alignItems='center'>
           <Controller
             control={control}

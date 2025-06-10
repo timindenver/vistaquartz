@@ -181,11 +181,9 @@ export const Step2 = () => {
               )
             }}
           />
-          {errors?.[2]?.confirmation && (
-            <Text fontSize='13px' color='error'>
-              {errors?.[2]?.confirmation?.message}
-            </Text>
-          )}
+          <Text fontSize='13px' color='error'>
+            Please confirm that you are the property OWNER. (Due to privacy laws we are only allowed to provide estimates for property improvement to a person on the title of the property)
+          </Text>
         </Flex>
       </Flex>
     </Flex>
