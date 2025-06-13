@@ -17,8 +17,6 @@ export type FormFields = [
     zip: string
   },
   {
-    estimateReceiveMethod: 'text' | 'email' | ''
-    textingPermission: 'yes' | 'no' | ''
     confirmation: 'owner' | 'non-owner' | ''
   },
   {
@@ -44,7 +42,6 @@ export const SubmitFormProvider = ({ children }: { children: ReactNode }) => {
         zip: '',
       },
       {
-        textingPermission: '',
         confirmation: '',
       },
       {

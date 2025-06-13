@@ -14,8 +14,6 @@ type SubmitDataProps = {
     street: string | null
     state: string | null
     zip: string | null
-    estimateReceiveMethod: string | null
-    textingPermission: string | null
     propertyOwner: string | null
     images: ImageListType | null
   }

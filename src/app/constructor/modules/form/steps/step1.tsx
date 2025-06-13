@@ -19,38 +19,6 @@ export const Step1 = () => {
         <Flex flexDir='column' gap='5px'>
           <Controller
             control={control}
-            name='1.city'
-            rules={{
-              required: {
-                value: true,
-                message: 'Please enter your city',
-              },
-            }}
-            render={({ field: { name: controllerName, value: controllerValue, onChange: controllerOnChange } }) => {
-              const haveError = errors?.[1]?.city
-
-              return (
-                <CustomizedInput
-                  name={controllerName}
-                  value={controllerValue}
-                  onChange={controllerOnChange}
-                  placeholder='City'
-                  borderColor={haveError ? 'error' : 'transparent'}
-                  outline={haveError ? 'var(--chakra-colors-error)' : 'focus-ring-color'}
-                />
-              )
-            }}
-          />
-          {errors?.[1]?.city && (
-            <Text fontSize='13px' color='error'>
-              {errors?.[1]?.city?.message}
-            </Text>
-          )}
-        </Flex>
-
-        <Flex flexDir='column' gap='5px'>
-          <Controller
-            control={control}
             name='1.street'
             rules={{
               required: {
@@ -76,6 +44,38 @@ export const Step1 = () => {
           {errors?.[1]?.street && (
             <Text fontSize='13px' color='error'>
               {errors?.[1]?.street?.message}
+            </Text>
+          )}
+        </Flex>
+
+        <Flex flexDir='column' gap='5px'>
+          <Controller
+            control={control}
+            name='1.city'
+            rules={{
+              required: {
+                value: true,
+                message: 'Please enter your city',
+              },
+            }}
+            render={({ field: { name: controllerName, value: controllerValue, onChange: controllerOnChange } }) => {
+              const haveError = errors?.[1]?.city
+
+              return (
+                <CustomizedInput
+                  name={controllerName}
+                  value={controllerValue}
+                  onChange={controllerOnChange}
+                  placeholder='City'
+                  borderColor={haveError ? 'error' : 'transparent'}
+                  outline={haveError ? 'var(--chakra-colors-error)' : 'focus-ring-color'}
+                />
+              )
+            }}
+          />
+          {errors?.[1]?.city && (
+            <Text fontSize='13px' color='error'>
+              {errors?.[1]?.city?.message}
             </Text>
           )}
         </Flex>

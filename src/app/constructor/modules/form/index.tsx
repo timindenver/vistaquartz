@@ -93,8 +93,6 @@ export const Form = ({ setActiveStep }: FormProps) => {
         street: formData?.[1]?.street,
         state: formData?.[1]?.state,
         zip: formData?.[1]?.zip,
-        estimateReceiveMethod: formData?.[2]?.estimateReceiveMethod,
-        textingPermission: formData?.[2]?.textingPermission,
         propertyOwner: formData?.[2]?.confirmation,
         images: uploadedImages?.length > 0 ? uploadedImages : null,
       },
@@ -186,12 +184,6 @@ export const Form = ({ setActiveStep }: FormProps) => {
       )}
 
       <Flex w='100%' maxW='520px' h='100%' flexDir='column' justifyContent='space-between' mx='auto' mt='32px' px={{ base: 'md', xl: 'unset' }}>
-        {activeFormStep === 0 && (
-          <Text textStyle='header' color='blue.dark' textAlign='center' mb='6'>
-            We have the specs needed to prepare your estimate
-          </Text>
-        )}
-
         <form
           style={{
             margin: isMobile || activeFormStep !== 0 ? 'auto 0' : 'unset',
