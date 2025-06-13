@@ -18,7 +18,7 @@ export const Step2 = () => {
         <Text textStyle='subheader' color='blue.dark'>
           Please confirm you are the property owner
         </Text>
-        <Flex flexDir='column' gap='5px'>
+        <Flex flexDir='column' gap='12px'>
           <Controller
             control={control}
             name='2.confirmation'
@@ -26,7 +26,7 @@ export const Step2 = () => {
               required: {
                 value: true,
                 message:
-                  'Please confirm that you are the property OWNER. (Due to privacy laws we are only allowed to provide estimates for property improvement to a person on the title of the property)',
+                  'Please confirm that you are the property OWNER. <br /> (Due to privacy laws we are only allowed to provide estimates for property improvement to a person on the title of the property)',
               },
             }}
             render={({ field: { name: controllerName, value: controllerValue, onChange: controllerOnChange } }) => {
@@ -66,7 +66,7 @@ export const Step2 = () => {
             }}
           />
           <Text fontSize='13px' color='error'>
-            Please confirm that you are the property OWNER. (Due to privacy laws we are only allowed to provide estimates for property improvement to a person on the title of the property)
+            Please confirm that you are the property OWNER. <br /> (Due to privacy laws we are only allowed to provide estimates for property improvement to a person on the title of the property)
           </Text>
         </Flex>
       </Flex>

@@ -191,7 +191,7 @@ export const Form = ({ setActiveStep }: FormProps) => {
           }}
         >
           <Flex w='100%' h='100%' alignItems='center'>
-            {activeFormStep === 0 && <Step0 />}
+            {activeFormStep === 0 && <Step0 setActiveFormStep={setActiveFormStep} />}
             {activeFormStep === 1 && <Step1 />}
             {activeFormStep === 2 && <Step2 />}
             {activeFormStep === 3 && <Step3 uploadedImages={uploadedImages} setUploadedImages={setUploadedImages} isMobile={isMobile} />}

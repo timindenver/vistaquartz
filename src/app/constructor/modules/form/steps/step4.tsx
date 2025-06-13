@@ -15,8 +15,11 @@ export const Step4 = ({ setActiveStep, isMobile }: Step4Props) => {
         <Text textStyle='header' color='blue.dark' textAlign='center'>
           Thank You! You will receive your estimate within 48 hours.
         </Text>
-        <Text textStyle='subheader' color='blue.dark' textAlign='center'>
+        <Text textStyle='subheader' fontWeight='600 !important' color='blue.dark' textAlign='center'>
           If you have any questions in the meantime please text us at 720-807-3626 We may reach out with additional questions or clarifications - Vista Quartz Team
+        </Text>
+        <Text textStyle='smallText' fontWeight='500 !important' color='blue.dark' textAlign='center'>
+          Please click the link in your email to confirm.
         </Text>
       </Flex>
       <Flex w='100%' flex='1' flexDir={{ base: 'column', xl: 'row' }} justifyContent={{ base: 'flex-end', xl: 'unset' }} gap='sm'>

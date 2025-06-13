@@ -7,7 +7,11 @@ import { useSender } from 'core/context/sender'
 import { Controller, useFormContext } from 'react-hook-form'
 import 'react-phone-number-input/style.css'
 
-export const Step0 = () => {
+type Step0Props = {
+  setActiveFormStep: Dispatch<SetStateAction<number>>
+}
+
+export const Step0 = ({ setActiveFormStep }: Step0Props) => {
   const sender = useSender()
   const {
     control,
@@ -32,19 +36,27 @@ export const Step0 = () => {
               const formData = Object.fromEntries(new FormData(event.target).entries())
               const email = formData.email
               const phone = formData.phone
+              const targetNode = iframeDoc.querySelector('.sender-form-success')
 
-              const interval = setInterval(() => {
-                const isSuccessfullySubmitted = window.getComputedStyle(iframeDoc.querySelector('.sender-form-success')).display !== 'none'
-                if (isSuccessfullySubmitted) {
+              if (!targetNode) return
+
+              const observer = new MutationObserver(() => {
+                const isVisible = window.getComputedStyle(targetNode).display !== 'none'
+                if (isVisible) {
+                  observer.disconnect()
+
                   clearErrors('0.formSubmitted')
-                  setValue('0.formSubmitted', {
-                    email,
-                    phone,
-                  })
+                  setValue('0.formSubmitted', { email, phone })
+                  setActiveFormStep((prev) => prev + 1)
                   trigger()
-                  clearInterval(interval)
                 }
-              }, 100)
+              })
+
+              observer.observe(targetNode, {
+                attributes: true,
+                attributeFilter: ['style', 'class'],
+                subtree: false,
+              })
             })
           }
         },

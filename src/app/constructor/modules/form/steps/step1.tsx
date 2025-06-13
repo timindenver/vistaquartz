@@ -16,7 +16,7 @@ export const Step1 = () => {
         Location where the work will be done
       </Text>
       <Flex flexDir='column' gap='20px'>
-        <Flex flexDir='column' gap='5px'>
+        <Flex flexDir='column' gap='7px'>
           <Controller
             control={control}
             name='1.street'
@@ -48,7 +48,7 @@ export const Step1 = () => {
           )}
         </Flex>
 
-        <Flex flexDir='column' gap='5px'>
+        <Flex flexDir='column' gap='7px'>
           <Controller
             control={control}
             name='1.city'
@@ -80,7 +80,7 @@ export const Step1 = () => {
           )}
         </Flex>
 
-        <Flex flexDir='column' gap='5px'>
+        <Flex flexDir='column' gap='7px'>
           <Controller
             control={control}
             name='1.state'
@@ -112,7 +112,7 @@ export const Step1 = () => {
           )}
         </Flex>
 
-        <Flex flexDir='column' gap='5px'>
+        <Flex flexDir='column' gap='7px'>
           <Controller
             control={control}
             name='1.zip'
