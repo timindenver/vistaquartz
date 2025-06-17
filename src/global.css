@@ -21,10 +21,9 @@
   font-family: 'Epilogue';
 }
 
-body {
-  height: 100vh;
+/* body {
   overflow-y: auto;
-}
+} */
 
 #root {
   height: 100vh;
@@ -34,3 +33,9 @@ body {
 body {
   font-family: 'Poppins', sans-serif;
 }
+
+
+/* 
+:global(.readMore) div button {
+  color: red Im !important;
+} */

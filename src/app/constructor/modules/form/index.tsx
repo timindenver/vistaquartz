@@ -164,7 +164,7 @@ export const Form = ({ setActiveStep }: FormProps) => {
             </Flex>
           </Flex>
 
-          {!isMobile && (
+          {/* {!isMobile && (
             <Flex
               flex={1}
               alignItems='center'
@@ -176,10 +176,11 @@ export const Form = ({ setActiveStep }: FormProps) => {
               }}
             >
               <Text textStyle='smallText' color='blue.dark'>
-                Configurator
+                DESIGN TOOL
               </Text>
             </Flex>
-          )}
+          )} */}
+          {!isMobile && <Flex flex='1'></Flex>}
         </Flex>
       )}
 

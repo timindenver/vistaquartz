@@ -1,6 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react'
 
 import { Button, Flex, Text } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
 
 type Step4Props = {
   setActiveStep: Dispatch<SetStateAction<number>>
@@ -8,6 +9,8 @@ type Step4Props = {
 }
 
 export const Step4 = ({ setActiveStep, isMobile }: Step4Props) => {
+  const navigate = useNavigate()
+
   return (
     <Flex h={{ base: '100%', xl: 'fit-content' }} flexDir='column' gap='40px'>
       {isMobile && <Flex flex='1'></Flex>}
@@ -38,7 +41,7 @@ export const Step4 = ({ setActiveStep, isMobile }: Step4Props) => {
           bg='blue.light'
           color='blue.dark'
           onClick={() => {
-            window.location.reload()
+            navigate('/')
           }}
         >
           Main Website

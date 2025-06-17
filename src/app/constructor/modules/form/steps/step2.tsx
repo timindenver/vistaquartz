@@ -18,7 +18,7 @@ export const Step2 = () => {
         <Text textStyle='subheader' color='blue.dark'>
           Please confirm you are the property owner
         </Text>
-        <Flex flexDir='column' gap='12px'>
+        <Flex flexDir='column' gap='24px'>
           <Controller
             control={control}
             name='2.confirmation'
@@ -65,7 +65,7 @@ export const Step2 = () => {
               )
             }}
           />
-          <Text fontSize='13px' color='error'>
+          <Text fontSize='13px' color='error' textAlign='center'>
             Please confirm that you are the property OWNER. <br /> (Due to privacy laws we are only allowed to provide estimates for property improvement to a person on the title of the property)
           </Text>
         </Flex>

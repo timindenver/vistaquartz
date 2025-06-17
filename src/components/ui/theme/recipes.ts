@@ -23,6 +23,16 @@ export const recipes = {
           textStyle: 'button',
           borderRadius: '0px',
         },
+        secondary:{
+          w: 'fit-content',
+          h: '50px',
+          bg:'#FF8052',
+          rounded:'md',
+          color:'#FFFFFF',
+          fontSize:'18px',
+          px:'14',
+          fontWeight:'light'
+        }
       },
     },
     defaultVariants: {

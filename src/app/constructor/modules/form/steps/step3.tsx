@@ -53,11 +53,11 @@ export const Step3 = ({ uploadedImages, setUploadedImages, isMobile }: Step3Prop
   return (
     <>
       <Flex flexDir='column' gap='md'>
-        <Flex flexDir='column' gap='0'>
-          <Text textStyle='subheader' color='blue.dark'>
-            (Optional) For the most accurate estimate please upload two or three photos of your bathroom. You may also text your images to 303.555.1212
+        <Flex flexDir='column' gap='12px'>
+          <Text textStyle='subheader' color='blue.dark' textAlign='center'>
+            For the most accurate estimate please upload two or three photos of your bathroom. You may also text your images to 720-807-3626
           </Text>
-          <Text textStyle='description' color='blue.dark'>
+          <Text textStyle='description' color='blue.dark' textAlign='center'>
             Please include photos of the entry to the bathroom and the existing bath or shower. The more images the better!
           </Text>
         </Flex>

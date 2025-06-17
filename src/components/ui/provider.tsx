@@ -18,7 +18,7 @@ export const system = createSystem(defaultConfig, {
 export function Provider(props: ColorModeProviderProps) {
   return (
     <ChakraProvider value={system}>
-      <ColorModeProvider {...props} />
+      <ColorModeProvider {...props} forcedTheme='light' />
     </ChakraProvider>
   )
 }
