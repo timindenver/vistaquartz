@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 
 private.txt
+.vercel
+.env*.local
