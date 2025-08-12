@@ -5,10 +5,7 @@ import type { ImageListType } from 'react-images-uploading'
 
 export type FormFields = [
   {
-    formSubmitted: {
-      text: string
-      phone: string
-    }
+    formSubmitted: boolean
   },
   {
     city: string
@@ -30,10 +27,7 @@ export const SubmitFormProvider = ({ children }: { children: ReactNode }) => {
     reValidateMode: 'onChange',
     defaultValues: [
       {
-        formSubmitted: {
-          text: '',
-          phone: '',
-        },
+        formSubmitted: false,
       },
       {
         city: '',

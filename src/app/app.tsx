@@ -1,7 +1,6 @@
 import { lazy } from 'react'
 
 import { SelectionProvider } from 'core/context/selection'
-import { SenderProvider } from 'core/context/sender'
 import ScrollToTop from 'core/hooks/scrollToTop'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Layout } from 'shared/layouts/layout'
@@ -20,29 +19,27 @@ export default function App() {
   return (
     <BrowserRouter>
       <SelectionProvider>
-        <SenderProvider>
-          <ScrollToTop />
-          <Routes>
-            <Route path='/design' element={<Constructor />} />
-            <Route
-              path='*'
-              element={
-                <Layout>
-                  <Routes>
-                    <Route path='/' element={<Root />} />
-                    <Route path='/why-natural-solid-surface' element={<WhyNaturalSolidSurface />} />
-                    <Route path='/about' element={<About />} />
-                    <Route path='/hall-of-shame' element={<HallOfShame />} />
-                    <Route path='/privacy-policy' element={<PrivacyPolicy />} />
-                    <Route path='/faq' element={<FAQ />} />
-                    <Route path='/team' element={<OurTeam />} />
-                    <Route path='*' element={<NotFound />} />
-                  </Routes>
-                </Layout>
-              }
-            />
-          </Routes>
-        </SenderProvider>
+        <ScrollToTop />
+        <Routes>
+          <Route path='/design' element={<Constructor />} />
+          <Route
+            path='*'
+            element={
+              <Layout>
+                <Routes>
+                  <Route path='/' element={<Root />} />
+                  <Route path='/why-natural-solid-surface' element={<WhyNaturalSolidSurface />} />
+                  <Route path='/about' element={<About />} />
+                  <Route path='/hall-of-shame' element={<HallOfShame />} />
+                  <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+                  <Route path='/faq' element={<FAQ />} />
+                  <Route path='/team' element={<OurTeam />} />
+                  <Route path='*' element={<NotFound />} />
+                </Routes>
+              </Layout>
+            }
+          />
+        </Routes>
       </SelectionProvider>
     </BrowserRouter>
   )

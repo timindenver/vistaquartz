@@ -164,22 +164,6 @@ export const Form = ({ setActiveStep }: FormProps) => {
             </Flex>
           </Flex>
 
-          {/* {!isMobile && (
-            <Flex
-              flex={1}
-              alignItems='center'
-              justifyContent='flex-end'
-              gap='10px'
-              cursor='pointer'
-              onClick={() => {
-                setActiveStep(1)
-              }}
-            >
-              <Text textStyle='smallText' color='blue.dark'>
-                DESIGN TOOL
-              </Text>
-            </Flex>
-          )} */}
           {!isMobile && <Flex flex='1'></Flex>}
         </Flex>
       )}
@@ -199,7 +183,7 @@ export const Form = ({ setActiveStep }: FormProps) => {
             {activeFormStep === 4 && <Step4 setActiveStep={setActiveStep} isMobile={isMobile} />}
           </Flex>
         </form>
-        {activeFormStep < 4 && (
+        {activeFormStep !== 0 && activeFormStep < 4 && (
           <Button
             w='100%'
             mt='20px'
