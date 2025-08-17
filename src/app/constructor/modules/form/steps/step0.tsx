@@ -40,7 +40,7 @@ export const Step0 = ({ setActiveFormStep }: Step0Props) => {
 
               clearErrors('0.formSubmitted')
               setValue('0.formSubmitted', true)
-              setActiveFormStep((prev) => prev + 1)
+              setActiveFormStep(1)
               trigger()
             }
           })
