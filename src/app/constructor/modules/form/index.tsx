@@ -43,20 +43,13 @@ export const Form = ({ setActiveStep }: FormProps) => {
 
   const [activeFormStep, setActiveFormStep] = useState(0)
   const [uploadedImages, setUploadedImages] = useState<ImageListType>([])
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const {
     getValues,
     trigger,
     formState: { isValid },
   } = useFormContext<FormFields>()
-
-  const handleBeforeUnload = async () => {
-    if (!isValid || activeFormStep !== 4) {
-      await handleSubmitRequest()
-    }
-  }
-
-  window.addEventListener('beforeunload', handleBeforeUnload)
 
   const handleGoNextStep = async () => {
     trigger()
@@ -81,6 +74,8 @@ export const Form = ({ setActiveStep }: FormProps) => {
 
     const additionalItems = selection?.selectionData?.additionalItems
 
+    setIsSubmitting(true)
+
     await submitData({
       body: {
         layout: selection?.selectionData?.layout || '',
@@ -96,9 +91,9 @@ export const Form = ({ setActiveStep }: FormProps) => {
         propertyOwner: formData?.[2]?.confirmation,
         images: uploadedImages?.length > 0 ? uploadedImages : null,
       },
+    }).finally(() => {
+      setIsSubmitting(false)
     })
-
-    window.removeEventListener('beforeunload', handleBeforeUnload)
   }
 
   return (
@@ -184,15 +179,8 @@ export const Form = ({ setActiveStep }: FormProps) => {
           </Flex>
         </form>
         {activeFormStep !== 0 && activeFormStep < 4 && (
-          <Button
-            w='100%'
-            mt='20px'
-            disabled={!isValid && activeFormStep === 0}
-            onClick={() => {
-              handleGoNextStep()
-            }}
-          >
-            Go to the Next Step
+          <Button w='100%' mt='20px' disabled={!isValid && activeFormStep === 0} onClick={handleGoNextStep}>
+            {isSubmitting ? 'Submitting' : 'Go to the Next Step'}
           </Button>
         )}
       </Flex>
