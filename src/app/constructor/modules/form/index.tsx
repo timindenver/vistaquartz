@@ -41,7 +41,7 @@ export const Form = ({ setActiveStep }: FormProps) => {
   const selection = useSelection()
   const isMobile = useBreakpointValue({ base: true, xl: false })
 
-  const [activeFormStep, setActiveFormStep] = useState(3)
+  const [activeFormStep, setActiveFormStep] = useState(0)
   const [uploadedImages, setUploadedImages] = useState<ImageListType>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
 
