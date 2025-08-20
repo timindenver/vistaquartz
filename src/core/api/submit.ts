@@ -15,11 +15,30 @@ type SubmitDataProps = {
     state: string | null
     zip: string | null
     propertyOwner: string | null
-    images: ImageListType | null
+    imagesFolderId: string
   }
 }
 
 export const submitData = async ({ body }: SubmitDataProps) => {
   const request = await api.post('/', body)
   return request
+}
+
+export const submitImages = async ({ images, imagesFolderId }: { images: ImageListType; imagesFolderId: string }) => {
+  let isSuccessful = true
+
+  try {
+    await Promise.all(
+      images.map(async (image) => {
+        await api.post('/images', {
+          images: [image],
+          imagesFolderId,
+        })
+      })
+    )
+  } catch (error) {
+    isSuccessful = false
+  }
+
+  return isSuccessful
 }

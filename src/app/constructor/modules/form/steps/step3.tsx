@@ -67,9 +67,14 @@ export const Step3 = ({ uploadedImages, setUploadedImages, isMobile }: Step3Prop
           name='3.images'
           render={({ field: { name: controllerName, value: controllerValue, onChange: controllerOnChange } }) => {
             return (
-              <ImageUploading multiple value={uploadedImages} onChange={onChange} maxNumber={maxUploadedImages}>
-                {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
-                  <Flex>
+              <ImageUploading multiple value={uploadedImages} onChange={onChange} maxNumber={maxUploadedImages} maxFileSize={4 * 1024 * 1024}>
+                {({ imageList, errors, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
+                  <Flex flexDir='column' gap='1'>
+                    {errors?.maxFileSize && (
+                      <Text color='red.500' textAlign='center'>
+                        Each file must be smaller than 4 MB.
+                      </Text>
+                    )}
                     {uploadedImages.length === 0 ? (
                       <Flex
                         {...dragProps}

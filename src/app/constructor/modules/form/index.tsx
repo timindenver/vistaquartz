@@ -1,7 +1,7 @@
 import { type Dispatch, type SetStateAction, useState } from 'react'
 
 import { Button, Flex, Text, useBreakpointValue } from '@chakra-ui/react'
-import { submitData } from 'core/api/submit'
+import { submitData, submitImages } from 'core/api/submit'
 import type { FormFields } from 'core/context/form'
 import { useSelection } from 'core/context/selection'
 import { useFormContext } from 'react-hook-form'
@@ -41,7 +41,7 @@ export const Form = ({ setActiveStep }: FormProps) => {
   const selection = useSelection()
   const isMobile = useBreakpointValue({ base: true, xl: false })
 
-  const [activeFormStep, setActiveFormStep] = useState(0)
+  const [activeFormStep, setActiveFormStep] = useState(3)
   const [uploadedImages, setUploadedImages] = useState<ImageListType>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -76,24 +76,39 @@ export const Form = ({ setActiveStep }: FormProps) => {
 
     setIsSubmitting(true)
 
-    await submitData({
-      body: {
-        layout: selection?.selectionData?.layout || '',
-        handling: selection?.selectionData?.handling || '',
-        wallColor: selection?.selectionData?.wallColor,
-        plumbingFixturesColor: selection?.selectionData?.fixtureOption?.color,
-        plumbingFixturesItems: plumbingFixturesItems?.length > 0 ? JSON.stringify(plumbingFixturesItems) : null,
-        additionalItems: additionalItems?.length > 0 ? JSON.stringify(additionalItems) : null,
-        city: formData?.[1]?.city,
-        street: formData?.[1]?.street,
-        state: formData?.[1]?.state,
-        zip: formData?.[1]?.zip,
-        propertyOwner: formData?.[2]?.confirmation,
-        images: uploadedImages?.length > 0 ? uploadedImages : null,
-      },
-    }).finally(() => {
+    try {
+      const imagesFolderId = window.crypto.randomUUID()
+
+      const submitRequest = await submitData({
+        body: {
+          layout: selection?.selectionData?.layout || '',
+          handling: selection?.selectionData?.handling || '',
+          wallColor: selection?.selectionData?.wallColor,
+          plumbingFixturesColor: selection?.selectionData?.fixtureOption?.color,
+          plumbingFixturesItems: plumbingFixturesItems?.length > 0 ? JSON.stringify(plumbingFixturesItems) : null,
+          additionalItems: additionalItems?.length > 0 ? JSON.stringify(additionalItems) : null,
+          city: formData?.[1]?.city,
+          street: formData?.[1]?.street,
+          state: formData?.[1]?.state,
+          zip: formData?.[1]?.zip,
+          propertyOwner: formData?.[2]?.confirmation,
+          imagesFolderId,
+        },
+      })
+
+      const submitRequestSuccessful = submitRequest?.data?.success || false
+
+      if (submitRequestSuccessful && uploadedImages?.length > 0) {
+        await submitImages({
+          images: uploadedImages,
+          imagesFolderId,
+        })
+      }
+    } catch (error) {
+      console.warn(error)
+    } finally {
       setIsSubmitting(false)
-    })
+    }
   }
 
   return (
