@@ -28,12 +28,12 @@ const Footer = () => {
           </Link>
           <Flex flexDir='column' fontWeight='light' color='#FFFFFF' fontSize={{ base: '10px', md: '20px' }} maxW='250px' gap='0.3rem'>
             <Flex flexDir='column' gap='0.2rem'>
-              <Text>10233 South Parker Road</Text>
-              <Text>Suite 300</Text>
-              <Text>Parker, CO 80134</Text>
+              <Text>1500 N Grant Street</Text>
+              <Text>Suite R</Text>
+              <Text>Denver, CO 80203</Text>
             </Flex>
-            <Link to='tel:+17209238814' style={{ width: 'fit-content' }}>
-              <Text>720-923-8814</Text>
+            <Link to='tel:+13037254368' style={{ width: 'fit-content' }}>
+              <Text>303-725-4368</Text>
             </Link>
           </Flex>
         </Flex>
