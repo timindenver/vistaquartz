@@ -31,7 +31,7 @@ const Navbar = () => {
             The grout-free Shower or Bath You've Always Wanted
           </Text>
           <Text fontSize={{ base: '11px', md: '24px' }} fontStyle='italic' textAlign='right'>
-            720-807-3626
+            303-725-4368
           </Text>
         </Flex>
       </Flex>
