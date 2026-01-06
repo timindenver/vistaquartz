@@ -224,25 +224,26 @@ export default function BathShowerSafetyModifications() {
           padding: 8px 12px; border-radius: 999px; margin-bottom: 18px;
           opacity: .85;
         }
-        .vq-safety__h1 { font-size: clamp(32px, 4vw, 52px); line-height: 1.08; margin: 0 0 14px; }
-        .vq-safety__h2 { font-size: 28px; margin: 0 0 14px; }
-        .vq-safety__h3 { font-size: 18px; margin: 0 0 8px; }
-        .vq-safety__subhead { font-size: 18px; line-height: 1.55; margin: 0 0 18px; max-width: 860px; opacity: .9; }
-        .vq-safety__bullets { margin: 18px 0 24px; padding-left: 18px; max-width: 860px; }
-        .vq-safety__bullets li { margin: 8px 0; }
-        .vq-safety__videoWrap {
-          max-width: 380px;
-          width: 100%;
-          border: 1px solid rgba(0,0,0,.12);
-          border-radius: 22px;
-          overflow: hidden;
-          background: rgba(0,0,0,.02);
-        }
-        .vq-safety__video {
-          display: block;
-          width: 100%;
-          height: auto;
-        }
+  .vq-safety__videoWrap {
+  max-width: 380px;
+  width: 100%;
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 22px;
+  overflow: hidden;
+  background: rgba(0,0,0,.02);
+
+  /* IMPORTANT: force visible height */
+  aspect-ratio: 9 / 16;
+}
+
+.vq-safety__video {
+  display: block;
+  width: 100%;
+  height: 100%;         /* IMPORTANT */
+  object-fit: cover;    /* looks good if aspect ratios differ */
+  background: #000;     /* avoids “blank white” while loading */
+}
+
 
         .vq-safety__ctaRow { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-top: 18px; }
         .vq-safety__ctaRowCenter { justify-content: center; }
