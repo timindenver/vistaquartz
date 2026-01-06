@@ -14,6 +14,7 @@ const PrivacyPolicy = lazy(() => import('./privacyPolicy'))
 const Root = lazy(() => import('./root'))
 const WhyNaturalSolidSurface = lazy(() => import('./whyNaturalSolidSurface'))
 const Constructor = lazy(() => import('./constructor/index'))
+const BathShowerSafetyModifications = lazy(() => import('./bathShowerSafetyModifications'))
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
               <Layout>
                 <Routes>
                   <Route path='/' element={<Root />} />
+                  <Route path='/bath-shower-safety-modifications' element={<BathShowerSafetyModifications />} />
                   <Route path='/why-natural-solid-surface' element={<WhyNaturalSolidSurface />} />
                   <Route path='/about' element={<About />} />
                   <Route path='/hall-of-shame' element={<HallOfShame />} />
@@ -44,3 +46,4 @@ export default function App() {
     </BrowserRouter>
   )
 }
+
