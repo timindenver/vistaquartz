@@ -7,7 +7,40 @@ const PHONE_TEL = "tel:+13037254368";
 export default function BathShowerSafetyModifications() {
   return (
     <main className="vq-safety">
-      {/* HERO */}
+      {/* HERO  {/* VIDEO PROOF */}
+      <section className="vq-safety__section vq-safety__sectionAlt">
+        <div className="vq-safety__container">
+          <h2 className="vq-safety__h2">See the Safety Upgrade in Action</h2>
+
+          <p className="vq-safety__textMuted" style={{ maxWidth: 860, marginTop: 0 }}>
+            A quick before-and-after look at how we install commercial-grade stainless steel grab bars—anchored
+            directly into wall studs through existing tile, without cracking or damage.
+          </p>
+
+<div className="vq-safety__videoWrap">
+  <video
+    className="vq-safety__video"
+    controls
+    playsInline
+    preload="metadata"
+    poster="/safety/safety-poster.jpg"
+  >
+    <source
+      src="https://jgfadi8wlqsjvctv.public.blob.vercel-storage.com/0106.mp4"
+      type="video/mp4"
+    />
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+
+          <p className="vq-safety__textMuted" style={{ fontSize: 13, marginBottom: 0 }}>
+            Stud-anchored safety hardware — not suction cups.
+          </p>
+        </div>
+      </section>
+
+      
       <section className="vq-safety__hero">
         <div className="vq-safety__container">
           <div className="vq-safety__badge">Colorado Front Range</div>
@@ -43,39 +76,7 @@ export default function BathShowerSafetyModifications() {
           </p>
         </div>
       </section>
-     {/* VIDEO PROOF */}
-      <section className="vq-safety__section vq-safety__sectionAlt">
-        <div className="vq-safety__container">
-          <h2 className="vq-safety__h2">See the Safety Upgrade in Action</h2>
-
-          <p className="vq-safety__textMuted" style={{ maxWidth: 860, marginTop: 0 }}>
-            A quick before-and-after look at how we install commercial-grade stainless steel grab bars—anchored
-            directly into wall studs through existing tile, without cracking or damage.
-          </p>
-
-<div className="vq-safety__videoWrap">
-  <video
-    className="vq-safety__video"
-    controls
-    playsInline
-    preload="metadata"
-    poster="/safety/safety-poster.jpg"
-  >
-    <source
-      src="https://jgfadi8wlqsjvctv.public.blob.vercel-storage.com/0106.mp4"
-      type="video/mp4"
-    />
-    Your browser does not support the video tag.
-  </video>
-</div>
-
-
-          <p className="vq-safety__textMuted" style={{ fontSize: 13, marginBottom: 0 }}>
-            Stud-anchored safety hardware — not suction cups.
-          </p>
-        </div>
-      </section>
-
+    
       {/* DIFFERENTIATORS */}
       <section className="vq-safety__section">
         <div className="vq-safety__container">
