@@ -8,7 +8,7 @@ export default function BathShowerSafetyModifications() {
   return (
     <main className="vq-safety">
       {/* HERO  {/* VIDEO PROOF */}
-      <section className="vq-safety__section vq-safety__sectionAlt">
+     <section className="vq-safety__section vq-safety__sectionAlt vq-safety__videoSection">
         <div className="vq-safety__container">
           <h2 className="vq-safety__h2">See the Safety Upgrade in Action</h2>
 
@@ -244,7 +244,13 @@ export default function BathShowerSafetyModifications() {
   aspect-ratio: 9 / 16;
   margin-bottom: 14px;
 }
+.vq-safety__videoSection h2 {
+  margin-bottom: 12px;
+}
 
+.vq-safety__videoSection p {
+  margin-bottom: 18px;
+}
 .vq-safety__video {
   display: block;
   width: 100%;
