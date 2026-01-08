@@ -191,7 +191,63 @@ export default function BathShowerSafetyModifications() {
               <p className="vq-safety__textMuted">Colorado Front Range.</p>
             </details>
           </div>
+        </section>
+<section className="vq-safety__section">
+  <div className="vq-safety__container">
+    <h2 className="vq-safety__h2">Is this the right solution for you?</h2>
 
+    <div className="vq-safety__grid3">
+      <div className="vq-safety__card">
+        <h3 className="vq-safety__h3">This is a great fit if you:</h3>
+        <ul className="vq-safety__bullets">
+          <li>Feel unsteady stepping into or out of your tub or shower</li>
+          <li>Want real support without a full remodel</li>
+          <li>Don’t trust suction-cup grab bars</li>
+          <li>Care for an aging parent or loved one</li>
+        </ul>
+      </div>
+
+      <div className="vq-safety__card">
+        <h3 className="vq-safety__h3">This may not be ideal if you:</h3>
+        <ul className="vq-safety__bullets">
+          <li>Are planning a full bathroom remodel right now</li>
+          <li>Only want a temporary or removable solution</li>
+          <li>Need medical or assisted-living equipment</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section className="vq-safety__section vq-safety__sectionAlt">
+  <div className="vq-safety__container">
+    <h2 className="vq-safety__h2">What happens when you call</h2>
+
+    <div className="vq-safety__steps">
+      <div className="vq-safety__step">
+        <div className="vq-safety__stepNum">1</div>
+        <p className="vq-safety__textMuted">
+          We ask a few quick questions about your bathroom and where you feel unsafe.
+        </p>
+      </div>
+
+      <div className="vq-safety__step">
+        <div className="vq-safety__stepNum">2</div>
+        <p className="vq-safety__textMuted">
+          We confirm placement, bar type, and installation approach.
+        </p>
+      </div>
+
+      <div className="vq-safety__step">
+        <div className="vq-safety__stepNum">3</div>
+        <p className="vq-safety__textMuted">
+          If it’s a good fit, we schedule your install — no pressure.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+        <section className="vq-safety__section">
           <div className="vq-safety__finalCta">
             <div>
               <h2 className="vq-safety__h2" style={{ marginBottom: 8 }}>
