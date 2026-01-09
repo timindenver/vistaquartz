@@ -7,8 +7,9 @@ const PHONE_TEL = "tel:+13037254368";
 export default function BathShowerSafetyModifications() {
   return (
     <main className="vq-safety">
-      {/* HERO  {/* VIDEO PROOF */}
-     <section className="vq-safety__section vq-safety__sectionAlt vq-safety__videoSection">
+{/* HERO */}
+{/* VIDEO PROOF */}
+    <section className="vq-safety__section vq-safety__sectionAlt vq-safety__videoSection">
         <div className="vq-safety__container">
           <h2 className="vq-safety__h2">See the Safety Upgrade in Action</h2>
 
@@ -191,11 +192,12 @@ export default function BathShowerSafetyModifications() {
               <p className="vq-safety__textMuted">Colorado Front Range.</p>
             </details>
           </div>
-        </section>
+        </div>
+      </section>
+
 <section className="vq-safety__section">
   <div className="vq-safety__container">
     <h2 className="vq-safety__h2">Is this the right solution for you?</h2>
-
     <div className="vq-safety__grid3">
       <div className="vq-safety__card">
         <h3 className="vq-safety__h3">This is a great fit if you:</h3>
@@ -247,7 +249,8 @@ export default function BathShowerSafetyModifications() {
   </div>
 </section>
 
-        <section className="vq-safety__section">
+      <section className="vq-safety__section">
+        <div className="vq-safety__container">
           <div className="vq-safety__finalCta">
             <div>
               <h2 className="vq-safety__h2" style={{ marginBottom: 8 }}>
