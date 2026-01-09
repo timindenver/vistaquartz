@@ -33,7 +33,7 @@ export default function BathShowerSafetyModifications() {
             </a>
 
             <div className="vq-safety__phoneBlock">
-              <div className="vq-safety__phoneLabel">Prefer to talk now?</div>
+              <div className="vq-safety__phoneLabel">Call us 24/7 to Schedule</div>
               <a className="vq-safety__phone" href={PHONE_TEL}>
                 {PHONE_DISPLAY}
               </a>
