@@ -12,7 +12,7 @@ export default function BathShowerSafetyModifications() {
       
       <section className="vq-safety__hero">
         <div className="vq-safety__container">
-          <div className="vq-safety__badge">Colorado Front Range</div>
+          <div className="vq-safety__badge">Denver - Colorado Springs - Fort Collins</div>
 
           <h1 className="vq-safety__h1">Bath / Shower Safety Modifications</h1>
 
