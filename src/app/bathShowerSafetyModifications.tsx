@@ -58,7 +58,7 @@ export default function BathShowerSafetyModifications() {
 <div className="vq-safety__videoRow">
   <div className="vq-safety__videoCol">
     <div className="vq-safety__videoWrap">
-      <vide
+      <video
         className="vq-safety__video"
         src="https://jgfadi8wlqsjvctv.public.blob.vercel-storage.com/0106.mp4"
         controls
@@ -251,7 +251,7 @@ export default function BathShowerSafetyModifications() {
       <div className="vq-safety__step">
         <div className="vq-safety__stepNum">3</div>
         <p className="vq-safety__textMuted">
-          If it’s a good fit, we schedule your install — often within 48 Hours!.
+          If it’s a good fit, we schedule your install — often within 48 Hours!
         </p>
       </div>
     </div>
