@@ -380,42 +380,77 @@ export default function BathShowerSafetyModifications() {
 /* Your existing .vq-safety__videoWrap and .vq-safety__video styles can stay.
    If your .vq-safety__videoWrap currently has max-width: 380px, that’s fine. */
 
+/* Offer card: make it visually distinct */
 .vq-safety__offerCard{
   flex: 0 1 420px;
-  border: 1px solid rgba(0,0,0,.12);
   border-radius: 22px;
   padding: 18px;
-  background: rgba(0,0,0,.02);
+  background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.06));
+  border: 2px solid rgba(0,0,0,.16);
+  box-shadow: 0 10px 26px rgba(0,0,0,.10);
 }
 
+/* Top badge and %: give them "label" energy */
+.vq-safety__offerBadge{
+  display: inline-flex;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 900;
+  letter-spacing: .02em;
+
+  background: linear-gradient(180deg, #ff9f1c, #f77f00);
+  color: #1a1a1a;
+
+  border: 1px solid rgba(0,0,0,.15);
+  box-shadow: 0 4px 10px rgba(247,127,0,.35);
+}
+
+
+.vq-safety__offerPercent{
+  font-weight: 900;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.08);
+  border: 1px solid rgba(0,0,0,.14);
+}
+
+/* Price box: give it contrast */
+.vq-safety__offerPriceBox{
+  border-radius: 18px;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.14);
+}
+
+/* Final price: make it the hero */
+.vq-safety__offerFinalValue{
+  font-size: 46px;
+  line-height: 1.0;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+/* CTA on the card: thicker + more prominent */
+.vq-safety__offerCta{
+  width: 100%;
+  margin-top: 6px;
+  padding: 16px 18px;
+  border-radius: 14px;
+}
+
+/* Fine print: tighten */
+.vq-safety__offerFinePrint{
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: .75;
+  line-height: 1.4;
+}
 .vq-safety__offerTop{
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-bottom: 12px;
-}
-
-.vq-safety__offerBadge{
-  display: inline-flex;
-  padding: 8px 12px;
-  border-radius: 999px;
-  font-weight: 900;
-  letter-spacing: .02em;
-  border: 1px solid rgba(0,0,0,.18);
-}
-
-.vq-safety__offerPercent{
-  font-weight: 900;
-  font-size: 14px;
-  opacity: .9;
-}
-
-.vq-safety__offerPriceBox{
-  border: 1px dashed rgba(0,0,0,.22);
-  border-radius: 18px;
-  padding: 14px;
-  background: rgba(0,0,0,.02);
   margin-bottom: 12px;
 }
 
@@ -451,12 +486,6 @@ export default function BathShowerSafetyModifications() {
   margin-bottom: 4px;
 }
 
-.vq-safety__offerFinalValue{
-  font-size: 40px;
-  line-height: 1.0;
-  font-weight: 900;
-}
-
 .vq-safety__offerFinalSub{
   margin-top: 6px;
   font-size: 13px;
@@ -470,17 +499,6 @@ export default function BathShowerSafetyModifications() {
 
 .vq-safety__offerBullets li{
   margin: 8px 0;
-}
-
-.vq-safety__offerCta{
-  width: 100%;
-}
-
-.vq-safety__offerFinePrint{
-  margin-top: 10px;
-  font-size: 12px;
-  opacity: .7;
-  line-height: 1.4;
 }
 
 @media (max-width: 900px){
