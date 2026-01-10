@@ -207,27 +207,30 @@ export default function BathShowerSafetyModifications() {
 <section className="vq-safety__section">
   <div className="vq-safety__container">
     <h2 className="vq-safety__h2">Is this the right solution for you?</h2>
-    <div className="vq-safety__grid3">
-      <div className="vq-safety__card">
-        <h3 className="vq-safety__h3">This is a great fit if you:</h3>
-        <ul className="vq-safety__bullets">
-          <li>Feel unsteady stepping into or out of your tub or shower</li>
+
+    <div className="vq-safety__fitGrid">
+      <div className="vq-safety__card vq-safety__fitCard">
+        <h3 className="vq-safety__h3">Great fit if you:</h3>
+        <ul className="vq-safety__checkList">
+          <li>Feel unsteady stepping in or out of the tub/shower</li>
           <li>Want real support without a full remodel</li>
           <li>Don’t trust suction-cup grab bars</li>
-          <li>Care for an aging parent or loved one</li>
+          <li>Are helping an aging parent or loved one</li>
         </ul>
       </div>
 
-      <div className="vq-safety__card">
-        <h3 className="vq-safety__h3">This may not be ideal if you:</h3>
-        <ul className="vq-safety__bullets">
-          <li>Are planning a full bathroom remodel right now</li>
-          <li>Only want a temporary or removable solution</li>
+      <div className="vq-safety__card vq-safety__fitCard">
+        <h3 className="vq-safety__h3">May not be ideal if you:</h3>
+        <ul className="vq-safety__checkList vq-safety__checkListWarn">
+          <li>Are planning a full remodel right now</li>
+          <li>Only want a temporary / removable solution</li>
           <li>Need medical or assisted-living equipment</li>
         </ul>
       </div>
     </div>
   </div>
+</section>
+
 </section>
 <section className="vq-safety__section vq-safety__sectionAlt">
   <div className="vq-safety__container">
@@ -405,6 +408,55 @@ export default function BathShowerSafetyModifications() {
   box-shadow: 0 4px 10px rgba(247,127,0,.35);
 }
 
+/* Fit section layout: 2 columns on desktop, 1 on mobile */
+.vq-safety__fitGrid{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+
+@media (max-width: 900px){
+  .vq-safety__fitGrid{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Keep text readable: avoid awkward short wraps */
+.vq-safety__fitCard{
+  max-width: 560px;     /* prevents super-wide lines on huge monitors */
+}
+
+/* Bullet list styling */
+.vq-safety__checkList{
+  margin: 10px 0 0;
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  line-height: 1.35;
+}
+
+.vq-safety__checkList li{
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 10px;
+}
+
+/* Simple bullet “dot” that won’t look weird on mobile */
+.vq-safety__checkList li::before{
+  content: "•";
+  font-weight: 900;
+  opacity: .85;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+/* Optional: visually distinguish the “not ideal” list */
+.vq-safety__checkListWarn li::before{
+  content: "–";
+  opacity: .7;
+}
 
 .vq-safety__offerPercent{
   font-weight: 900;
