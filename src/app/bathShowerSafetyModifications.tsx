@@ -106,7 +106,7 @@ export default function BathShowerSafetyModifications() {
     </ul>
 
     <a className="vq-safety__btnPrimary vq-safety__offerCta" href={PHONE_TEL}>
-      Call for Senior Pricing
+      Call to Schedule
     </a>
 
     <div className="vq-safety__offerFinePrint">
