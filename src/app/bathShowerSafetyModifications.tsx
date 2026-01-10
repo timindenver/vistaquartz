@@ -33,7 +33,7 @@ export default function BathShowerSafetyModifications() {
             </a>
 
             <div className="vq-safety__phoneBlock">
-              <div className="vq-safety__phoneLabel">Call us 24/7 to Schedule</div>
+              <div className="vq-safety__phoneLabel">Call us anytime to Schedule</div>
               <a className="vq-safety__phone" href={PHONE_TEL}>
                 {PHONE_DISPLAY}
               </a>
@@ -45,7 +45,6 @@ export default function BathShowerSafetyModifications() {
           </p>
         </div>
       </section>
-    {/* HERO */}
 {/* VIDEO PROOF */}
     <section className="vq-safety__section vq-safety__sectionAlt vq-safety__videoSection">
         <div className="vq-safety__container">
@@ -56,55 +55,65 @@ export default function BathShowerSafetyModifications() {
             directly into wall studs through existing tile, without cracking or damage.
           </p>
 
-  <div className="vq-safety__videoWrap">
-  <video
-    className="vq-safety__video"
-    controls
-    playsInline
-    preload="metadata"
-    poster="/safety/safety-poster.jpg"
-  >
-    <source
-      src="https://jgfadi8wlqsjvctv.public.blob.vercel-storage.com/0106.mp4"
-      type="video/mp4"
-    />
-    Your browser does not support the video tag.
-  </video>
+<div className="vq-safety__videoRow">
+  <div className="vq-safety__videoCol">
+    <div className="vq-safety__videoWrap">
+      <vide
+        className="vq-safety__video"
+        src="https://jgfadi8wlqsjvctv.public.blob.vercel-storage.com/0106.mp4"
+        controls
+        playsInline
+        preload="metadata"
+        poster="/safety/safety-poster.jpg"
+      />
+    </div>
+
+    <p className="vq-safety__textMuted" style={{ fontSize: 13, margin: "10px 0 0" }}>
+      Stud-anchored safety hardware — not suction cups.
+    </p>
   </div>
 
+  <aside className="vq-safety__offerCard" aria-label="Senior discount pricing">
+    <div className="vq-safety__offerTop">
+      <div className="vq-safety__offerBadge">Senior Discount</div>
+      <div className="vq-safety__offerPercent">30% OFF</div>
+    </div>
 
-          <p className="vq-safety__textMuted" style={{ fontSize: 13, marginBottom: 0 }}>
-            Stud-anchored safety hardware — not suction cups.
-          </p>
-        </div>
-      </section>
-      {/* DIFFERENTIATORS */}
-      <section className="vq-safety__section">
-        <div className="vq-safety__container">
-          <h2 className="vq-safety__h2">What makes our installs different</h2>
+    <div className="vq-safety__offerPriceBox">
+      <div className="vq-safety__offerLine">
+        <span className="vq-safety__offerLabel">Normal price</span>
+        <span className="vq-safety__offerStrike">$425</span>
+      </div>
 
-          <div className="vq-safety__grid3">
-            <div className="vq-safety__card">
-              <h3 className="vq-safety__h3">Commercial-grade stainless steel</h3>
-              <p className="vq-safety__textMuted">
-                Durable, corrosion-resistant grab bars that feel solid and secure.
-              </p>
-            </div>
+      <div className="vq-safety__offerLine">
+        <span className="vq-safety__offerLabel">Senior discount</span>
+        <span className="vq-safety__offerMinus">– $128</span>
+      </div>
 
-            <div className="vq-safety__card">
-              <h3 className="vq-safety__h3">Installation into studs</h3>
-              <p className="vq-safety__textMuted">
-                We anchor into framing for maximum strength—no “hope and pray” hardware.
-              </p>
-            </div>
+      <div className="vq-safety__offerDivider" />
 
-            <div className="vq-safety__card">
-              <h3 className="vq-safety__h3">Tile-safe installation</h3>
-              <p className="vq-safety__textMuted">
-                Expert drilling and fastening through your existing tile surround without cracking it.
-              </p>
-            </div>
-          </div>
+      <div className="vq-safety__offerFinal">
+        <div className="vq-safety__offerFinalLabel">Senior price</div>
+        <div className="vq-safety__offerFinalValue">$297</div>
+        <div className="vq-safety__offerFinalSub">Set of two grab bars • Installed into studs</div>
+      </div>
+    </div>
+
+    <ul className="vq-safety__offerBullets">
+      <li>Commercial-grade stainless steel</li>
+      <li>Anchored into studs (not suction cups)</li>
+      <li>Installed through existing tile</li>
+    </ul>
+
+    <a className="vq-safety__btnPrimary vq-safety__offerCta" href={PHONE_TEL}>
+      Call for Senior Pricing
+    </a>
+
+    <div className="vq-safety__offerFinePrint">
+      *Discount available for seniors. Pricing shown for a set of two grab bars. Additional bars available.
+    </div>
+  </aside>
+</div>
 
           <div className="vq-safety__note">
             <strong>Note:</strong> Suction cup grab bars can lose hold depending on surface and moisture.
@@ -242,7 +251,7 @@ export default function BathShowerSafetyModifications() {
       <div className="vq-safety__step">
         <div className="vq-safety__stepNum">3</div>
         <p className="vq-safety__textMuted">
-          If it’s a good fit, we schedule your install — usually within 48 Hours!.
+          If it’s a good fit, we schedule your install — often within 48 Hours!.
         </p>
       </div>
     </div>
@@ -292,7 +301,7 @@ export default function BathShowerSafetyModifications() {
           opacity: .85;
         }
   .vq-safety__videoWrap {
-  max-width: 380px;
+  max-width: 520px;
   width: 100%;
   border: 1px solid rgba(0,0,0,.12);
   border-radius: 22px;
@@ -355,7 +364,128 @@ export default function BathShowerSafetyModifications() {
           border-radius: 14px; background: rgba(0,0,0,.02);
           opacity: .9;
         }
+.vq-safety__videoRow{
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
 
+.vq-safety__videoCol{
+  flex: 1 1 380px;
+  min-width: 320px;
+}
+
+/* Your existing .vq-safety__videoWrap and .vq-safety__video styles can stay.
+   If your .vq-safety__videoWrap currently has max-width: 380px, that’s fine. */
+
+.vq-safety__offerCard{
+  flex: 0 1 420px;
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 22px;
+  padding: 18px;
+  background: rgba(0,0,0,.02);
+}
+
+.vq-safety__offerTop{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.vq-safety__offerBadge{
+  display: inline-flex;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 900;
+  letter-spacing: .02em;
+  border: 1px solid rgba(0,0,0,.18);
+}
+
+.vq-safety__offerPercent{
+  font-weight: 900;
+  font-size: 14px;
+  opacity: .9;
+}
+
+.vq-safety__offerPriceBox{
+  border: 1px dashed rgba(0,0,0,.22);
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(0,0,0,.02);
+  margin-bottom: 12px;
+}
+
+.vq-safety__offerLine{
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.vq-safety__offerLabel{ opacity: .85; }
+
+.vq-safety__offerStrike{
+  text-decoration: line-through;
+  font-weight: 800;
+  opacity: .75;
+}
+
+.vq-safety__offerMinus{
+  font-weight: 900;
+}
+
+.vq-safety__offerDivider{
+  height: 1px;
+  background: rgba(0,0,0,.14);
+  margin: 12px 0;
+}
+
+.vq-safety__offerFinalLabel{
+  font-size: 12px;
+  opacity: .8;
+  margin-bottom: 4px;
+}
+
+.vq-safety__offerFinalValue{
+  font-size: 40px;
+  line-height: 1.0;
+  font-weight: 900;
+}
+
+.vq-safety__offerFinalSub{
+  margin-top: 6px;
+  font-size: 13px;
+  opacity: .85;
+}
+
+.vq-safety__offerBullets{
+  margin: 0 0 14px;
+  padding-left: 18px;
+}
+
+.vq-safety__offerBullets li{
+  margin: 8px 0;
+}
+
+.vq-safety__offerCta{
+  width: 100%;
+}
+
+.vq-safety__offerFinePrint{
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: .7;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px){
+  .vq-safety__offerCard{ flex: 1 1 100%; }
+}
         .vq-safety__steps { display: grid; gap: 12px; margin-top: 14px; }
         .vq-safety__step {
           display: grid; grid-template-columns: 44px 1fr; gap: 12px;
