@@ -231,7 +231,6 @@ export default function BathShowerSafetyModifications() {
   </div>
 </section>
 
-</section>
 <section className="vq-safety__section vq-safety__sectionAlt">
   <div className="vq-safety__container">
     <h2 className="vq-safety__h2">What happens when you call</h2>
