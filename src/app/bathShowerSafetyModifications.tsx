@@ -317,6 +317,10 @@ export default function BathShowerSafetyModifications() {
 .vq-safety__videoSection h2 {
   margin-bottom: 12px;
 }
+/* Hide global header ONLY on safety page */
+.vq-safety .site-header {
+  display: none;
+}
 
 .vq-safety__videoSection p {
   margin-bottom: 18px;
