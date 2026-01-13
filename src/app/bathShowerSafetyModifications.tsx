@@ -377,6 +377,15 @@ export default function BathShowerSafetyModifications() {
   flex-wrap: wrap;
   margin-top: 10px;
 }
+body.page-safety .site-header__tagline {
+  font-size: 0 !important;
+}
+
+body.page-safety .site-header__tagline::after {
+  content: "Grab bar safety upgrades — installed into studs";
+  font-size: 14px;
+  opacity: .85;
+}
 
 .vq-safety__videoCol{
   flex: 1 1 380px;
